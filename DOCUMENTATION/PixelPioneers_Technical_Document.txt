@@ -1,0 +1,59 @@
+Documento técnico 
+
+o Nombre del proyecto
+TourNest
+
+o Objetivo general
+Desarrollar una plataforma digital innovadora que facilite la conexión entre viajeros y opciones de alojamiento/turismo confiables, incorporando herramientas de inteligencia artificial para personalizar la experiencia del usuario, optimizar los procesos de reserva y generar confianza a través de soluciones tecnológicas seguras y accesibles
+
+o Objetivos específicos
+1. Unificar la gestión de reservas de habitaciones y paquetes turísticos en un solo sistema, evitando errores como overbooking y pérdida de información.
+
+2. Implementar un módulo de inteligencia artificial que sugiera paquetes turísticos personalizados según las preferencias, historial y perfil de cada cliente.
+
+3. Optimizar el control de pagos y reportes financieros, ofreciendo herramientas automáticas para el seguimiento de ingresos, ocupación y ventas.
+
+4. Mejorar la experiencia del usuario mediante una interfaz web amigable que permita búsquedas rápidas, reservas en tiempo real y confirmaciones inmediatas.
+
+5. Fortalecer la confianza del cliente a través de notificaciones automáticas, alertas de check-in/check-out, confirmación de pagos y reseñas verificadas.
+
+6. Ofrecer valor agregado a los hoteles y operadores turísticos, mediante funciones de promociones dinámicas (ejemplo: descuentos en paquetes por estadías largas).
+
+7. Ampliar el alcance del negocio turístico conectando a un público global con la oferta hotelera y cultural local, fomentando el desarrollo del turismo sostenible.
+
+o Planteamiento del problema
+Al planear un paseo o viaje, las personas suelen organizar por sí mismas todos los detalles: buscar hoteles, reservar tours, calcular gastos de transporte y comidas, y armar un presupuesto aproximado. Sin embargo, esta práctica muchas veces genera un sobrecosto inesperado, ya sea por desconocimiento de opciones más económicas o por la falta de herramientas que unifiquen toda la información.
+
+En otros casos, los viajeros optan por comprar un paquete turístico completo que incluye alojamiento, transporte y actividades. No obstante, este proceso también puede resultar tedioso y desgastante, ya que implica contactar a varias empresas y navegar entre múltiples páginas web para comparar precios, revisar reseñas y asegurarse de que el paquete elegido se ajuste a sus necesidades.
+
+Este escenario genera dos grandes problemas para los usuarios:
+
+1. Falta de centralización de la información, lo que obliga a invertir demasiado tiempo en la búsqueda y comparación.
+
+2. Dificultad para optimizar el presupuesto, ya que no existen herramientas inteligentes que permitan ajustar los planes de viaje según preferencias y recursos disponibles.
+
+De esta necesidad surge la propuesta de desarrollar una plataforma digital integral, que unifique en un solo lugar hoteles, tours, paquetes completos y otros servicios turísticos. Esta plataforma permitirá a los usuarios filtrar por gustos, palabras clave y presupuesto, reduciendo la incertidumbre, los sobrecostos y la pérdida de tiempo al planear un viaje.
+
+o Alcance del proyecto
+El proyecto comprende el desarrollo de una plataforma digital que centralice la oferta turística, permitiendo a los usuarios buscar, comparar y reservar paquetes, hoteles, tours y servicios complementarios en un solo lugar. La solución ofrecerá filtros personalizados, generación de presupuestos y recomendaciones basadas en inteligencia artificial, con el fin de optimizar la planificación de viajes y mejorar la experiencia del usuario.
+
+o Historias de usuario
+* Como viajero, quiero buscar y comparar hoteles, tours y paquetes en una sola plataforma para ahorrar tiempo y evitar navegar en múltiples sitios web.
+
+* Como usuario que planea un viaje, quiero generar un presupuesto estimado según mis preferencias para tener un mejor control de mis gastos.
+
+* Como viajero indeciso, quiero recibir recomendaciones personalizadas con ayuda de IA para descubrir opciones que se ajusten a mis gustos y necesidades.
+
+* Como cliente que busca ofertas, quiero aplicar filtros por precio, ubicación, actividades y valoraciones para encontrar fácilmente la opción que mejor se adapte a mí.
+
+* Como turista que viaja en grupo, quiero poder reservar varios servicios en un solo paquete para facilitar la organización del viaje sin depender de múltiples reservas.
+
+* Como usuario frecuente, quiero guardar mis viajes anteriores y favoritos para poder reutilizar planes o inspirarme en experiencias pasadas.
+
+* Como administrador de la plataforma, quiero gestionar la información de hoteles, tours y paquetes ofrecidos para mantener actualizada la oferta turística.
+
+o Evidencia de aplicación de la metodología SCRUM
+
+Las evidencias fueron documentadas en el archivo evidenciasScrum.pdf
+
+

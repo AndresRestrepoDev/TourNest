@@ -1,0 +1,11 @@
+Kick-off
+En nuestra primera reunión de lanzamiento, conocida como kick-off, el equipo definió la dirección del proyecto. Discutimos varias ideas y analizamos diferentes casos de uso, decidiendo finalmente enfocarnos en la categoría de turismo. Acordamos los objetivos generales, repartimos los roles y responsabilidades, y comenzamos la documentación inicial del proyecto.
+
+Daily #1
+Durante esta primera reunión, revisamos la documentación del proyecto. Aunque ya teníamos una visión general, nos dimos cuenta de que los objetivos específicos no estaban claramente definidos y el alcance del proyecto aún no se había evaluado. Para avanzar, cada miembro del equipo se responsabilizó de investigar y redactar los puntos clave, asegurando que cada sección de la documentación fuera clara y relevante para nuestro proyecto.
+
+Daily #2
+En esta reunión, revisamos el proyecto con una perspectiva más clara gracias a la documentación del día anterior. Esto nos dio una visión más amplia de lo que necesitábamos construir. Como resultado, las tareas se dividieron de la siguiente manera: dos personas se encargaron de crear el Product Backlog (lista de tareas pendientes del producto) y las otras dos se enfocaron en redactar las historias de usuario. El resto del día se dedicó a completar estas tareas.
+
+Daily #3
+El enfoque de esta reunión fue la definición de nuevas tareas y la finalización del documento técnico. Además, hicimos un énfasis en el uso de Git para el trabajo colaborativo. Reforzamos los comandos esenciales y establecimos reglas para la gestión de ramas para evitar fusiones incorrectas en el código.

@@ -1,0 +1,39 @@
+Semana 1 – Planeación y análisis (13 al 15 de Agosto)
+
+Miercoles:
+- Un kick-off de proyecto es la primera reunión formal que se realiza con todo el equipo involucrado en un proyecto, incluyendo al cliente si es externo, antes de comenzar con la ejecución.
+
+Su objetivo principal es alinear a todos los participantes, establecer objetivos, definir roles y responsabilidades, y crear un ambiente de colaboración y motivación para el éxito del proyecto. 
+
+<creación del documento tecnico>
+
+Conformar el equipo -> Andres Restrepo, Stiven Hidalgo, Jeronimo Cardenas, Yancelly Rojo
+seleccionar el tema y categoría  -> Categoria turismo
+definir el público objetivo y alcance general del proyecto. -> Documento tecnico
+
+Jueves: 
+Asignar roles (Scrum Master, ProductOwner, Developers)
+ProductOwner -> Stiven Hidalgo
+Scrum Master -> Andres Restrepo
+Developers -> Yancelly Rojas y Geronimo Cardona
+
+Viernes:
+Redactar historias de usuario, asignar tareas, priorizarlas y crear backlog y board en Azure DevOps.
+
+Entregables Semana 1:
+• Historias de usuario priorizadas
+• Product Backlog
+• Board de tareas (Azure DevOps)
+
+Recomendaciones:
+Durante esta semana, luego de definir el proyecto, se recomienda crear el elevator pitch
+(en inglés) y practicarlo a lo largo de la semana.
+
+
+Elevator Pitch – Español
+Buenos días, mi nombre es Andrés Restrepo y en este proyecto cumplí el rol de Scrum Master, además de apoyar en el desarrollo backend. Como Scrum Master, me enfoqué en coordinar al equipo, asegurar el cumplimiento de las ceremonias ágiles, priorizar tareas y facilitar la comunicación, garantizando que avanzáramos de manera organizada. En el backend, participé en la conexión con la base de datos y el desarrollo de funcionalidades clave que permiten a la aplicación procesar la información de los usuarios y generar respuestas eficientes. Gracias a este trabajo colaborativo, logramos una plataforma que no solo cumple con los objetivos planteados, sino que también ofrece una experiencia funcional y escalable para los usuarios.
+
+Elevator Pitch – English
+Good morning, my name is Andrés Restrepo. In this project I took the role of Scrum Master and also contributed to the backend development. As a Scrum Master, I focused on coordinating the team, leading agile ceremonies, prioritizing tasks, and facilitating communication, ensuring an organized workflow. On the backend side, I contributed to the database connection and the development of key features that allow the application to process user information and deliver efficient results. Through this collaborative work, we built a platform that not only meets the project goals but also provides a functional and scalable experience for users.
+
+
