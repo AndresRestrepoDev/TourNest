@@ -1,0 +1,52 @@
+El proyecto debe desarrollarse siguiendo las etapas del ciclo de vida del desarrollo de software. La planificación debe basarse en metodologías ágiles, específicamente SCRUM. 
+
+Implementación de la metodología SCRUM a través del uso de Azure DevOps.
+
+Entregables Obligatorios
+
+▪ Repositorio Git estructurado y documentado con:
+	o Link público al proyecto desplegado (Netlify, GitHub Pages, etc)
+	o Código fuente
+	o README con descripción general del proyecto, instrucciones claras para ejecutar el proyecto, tecnologías utilizadas y créditos del equipo
+	o Carga completa en Moodle por todos los integrantes con todos los entregables obligatorios.
+	• Documento técnico mínimo (formato PDF, nombrado como NombreEquipo_DocumentoTecnico.pdf) que incluya:
+	o Nombre del proyecto
+	o Objetivo general
+	o Objetivos específicos
+	o Planteamiento del problema
+	o Alcance del proyecto
+	o Historias de usuario
+	o Evidencia de aplicación de la metodología SCRUM
+	
+• Prototipo visual del proyecto (Wireframe/boceto UI) -> Hacer un figma
+
+• Documentación técnica complementaria con diagramas adicionales (Modelo relacional, diagrama de componentes, diagrama de navegación, etc.). -> Usar Draw.io
+
+
+NOTA: tener en cuenta
+
+Criterios de evaluación:
+• Aplicación del ciclo de vida del desarrollo de software
+• Evidencia de la metodología SCRUM aplicada
+• Documento técnico completo y coherente
+• Calidad del código y estructura del repositorio
+• Cumplimiento de requisitos funcionales y técnicos
+• Diseño visual y experiencia del usuario
+• Documentación clara y bien organizada
+• Participación equitativa en la sustentación
+• Creatividad y originalidad del diseño
+• Buenas prácticas de programación
+• Planeación efectiva y seguimiento del cronograma
+• Uso de código, comentarios y documentación incluida en el repositorio de Git 100% en inglés
+
+Extras Opcionales:
+• Incorporar Python en el desarrollo web para implementar funcionalidades concretas como procesamiento de datos, almacenamiento de información o generación dinámica de contenido. El código debe ser útil, estar correctamente documentado y explicarse de forma clara en la sustentación.
+• Integrar una API externa pública (además de la propia) para enriquecer los datos o mejorar la experiencia del usuario.
+• Incluir una funcionalidad destacada no solicitada en los requisitos, siempre que sea funcional y coherente con el proyecto desarrollado.
+
+Estas serán consideradas en la sustentación técnica como un valor agregado que podrá influir positivamente en la evaluación final, siempre que su implementación sea funcional,coherente y de calidad.
+
+	
+¡Mucho éxito! Estamos ansiosos por ver todo tu talento en acción.
+
+

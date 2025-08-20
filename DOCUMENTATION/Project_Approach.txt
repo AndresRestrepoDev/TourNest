@@ -1,0 +1,55 @@
+Documento del Proyecto: Sistema de Gestión de Hotel y Paquetes Turísticos (TourNest)
+1. Problema
+
+Actualmente, muchos hoteles que también ofrecen paquetes turísticos gestionan sus operaciones de manera fragmentada:
+
+Un sistema (o incluso registros manuales en cuadernos) para las habitaciones. Otro sistema distinto para excursiones, tours o paquetes turísticos. Esto genera múltiples dificultades:
+
+Overbooking: reservas duplicadas para la misma habitación o tour.
+Pérdida de información: dificultad para unificar datos de clientes y pagos.
+Gestión ineficiente de promociones: no se pueden ofrecer paquetes combinados (hotel + tour) de manera sencilla.
+Falta de control en reportes, finanzas y administración.
+
+2. Solución
+
+Desarrollar una plataforma web unificada que centralice la gestión hotelera y turística, permitiendo:
+
+Reservas de habitaciones con disponibilidad en tiempo real, venta de paquetes turísticos asociados a las reservas de hotel, control centralizado de pagos, clientes y reportes, acceso para diferentes roles: administrador, recepcionista y cliente.
+
+3. Valor agregado con IA 🤖
+
+El sistema integrará herramientas de Inteligencia Artificial para mejorar la experiencia y la gestión:
+
+Recomendaciones personalizadas: sugerir paquetes turísticos según historial de reservas o preferencias del cliente.
+Predicción de ocupación: estimar niveles de ocupación hotelera en fechas futuras para ajustar precios dinámicos.
+Chatbot inteligente: atención al cliente automatizada para consultas comunes (disponibilidad, precios, check-in/out).
+Análisis de tendencias: reportes automáticos que identifiquen los tours más populares o las temporadas de mayor demanda.
+
+4. Público objetivo
+
+- Hoteles pequeños y medianos que actualmente no cuentan con un sistema unificado.
+- Agencias turísticas locales que deseen integrar paquetes con hospedaje.
+- Clientes viajeros que buscan reservar habitación + tour en un solo lugar, de forma práctica y segura.
+
+5. Alcance general
+
+El sistema cubrirá las siguientes áreas:
+
+- Gestión administrativa: habitaciones, paquetes, reportes financieros.
+- Gestión de clientes: registro de usuarios, historial de reservas, control de pagos.
+- Reservas online: habitaciones y paquetes turísticos con disponibilidad en tiempo real.
+- Comunicación automatizada: correos de confirmación, recordatorios y notificaciones.
+- Roles diferenciados: administrador, recepcionista y cliente.
+
+6. MVP (Producto Mínimo Viable)
+
+El MVP incluirá las siguientes funcionalidades:
+
+Administrador: Registro y gestión de habitaciones (tipo, precio, capacidad), registro y gestión de paquetes turísticos, Control básico de pagos y generación de reportes simples.
+
+Cliente: Registro de usuario, búsqueda de habitaciones disponibles según fecha, reserva en línea, selección de un paquete turístico adicional, consulta de estado de reserva y pago.
+
+Extras MVP con IA (mínimos):
+
+Chatbot sencillo para dudas frecuentes.
+Recomendación inicial de paquetes basada en la selección de habitación.

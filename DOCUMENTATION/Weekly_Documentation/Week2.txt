@@ -1,0 +1,28 @@
+Semana 2 – Diseño y desarrollo (19 al 22 de agosto)
+
+Objetivo: Avanzar desde la fase de diseño hacia un desarrollo funcional inicial con un prototipo funcional mínimo (MVP inicial) donde se pueda crear y leer información desde la base de datos, y dejar listo el entorno para completar las demás operaciones.
+
+Martes:
+Modelo relacional, diagrama de componentes y navegación. Crear modelo relacional (E-R) para la base de datos, diagrama de componentes y de navegación del sistema. ->Andres Restrepo
+
+Miercoles:
+Sprint Planning + Diseño UI. Definir funcionalidades a desarrollar y crear wireframe o prototipo en Figma
+-> Sprint Planning Stiven Hidalgo
+-> Figma Yancelly Rojas
+
+Jueves:
+Estructura inicial del proyecto e integración con la base de datos. Configurar repositorio, estructura de carpetas, plantillas y establecer conexión inicial a la base de datos.
+-> Base de datos Geronimo Cardona
+-> Conexion a la base de datos Andres Restrepo
+
+Viernes: 
+CRUD esencial. Implementar funciones para crear y leer datos con persistencia en la base de datos, junto con las vistas necesarias
+-> CRUD Andrs Restrepo
+-> Vistas Stiven Hidalgo
+
+Entregables Semana 2:
+• Modelo E-R – Diagrama de componentes y diagrama de navegación
+• Prototipo visual (Wireframe/boceto UI)
+• Repositorio inicial con estructura del proyecto
+
+
