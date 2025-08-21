@@ -57,3 +57,114 @@ o Evidencia de aplicación de la metodología SCRUM
 Las evidencias fueron documentadas en el archivo evidenciasScrum.pdf
 
 
+
+
+Product Owner
+
+Soy el responsable de maximizar el valor del producto que el equipo de desarrollo construye para nuestro cliente(Decameron, hotel).
+
+
+Fase 0: Visión y Preparación (Pre-Scrum)
+
+
+1. Visión del Producto (Product Vision Board)
+
+· Para (Cliente Objetivo): Hoteles medianos y sus clientes finales que gestionan alojamiento y paquetes turísticos de forma separada.
+· Que (Necesidad): Necesitan un sistema unificado que evite overbooking, pierda información y dificulte la venta cruzada.
+· El Producto es: Una plataforma web integral de gestión de reservas.
+· Que Hace: Unifica la reserva de habitaciones (con disponibilidad en tiempo real) y la venta de paquetes turísticos en un solo sistema, con control de pagos, clientes y reportes.
+· Valor: Aumenta la eficiencia operativa, reduce errores costosos, incrementa los ingresos mediante paquetes combinados y mejora la experiencia del cliente.
+· Diferencia: Es un sistema todo-en-uno, asequible y específico para este mismo, a diferencia de soluciones genéricas o separadas.
+
+2. Stakeholders e Interesados
+
+¿Quién tiene interés en el proyecto?
+
+· Principal: Dueño/Gerente del hotel.
+· Usuarios Directos: Recepcionistas, agentes de ventas, administradores y guias turisticos.
+· Usuarios Finales: Clientes que reservan en línea.
+· Equipo: Desarrolladores, diseñadores, tester (tus compañeros).
+
+3. Product Backlog Inicial (Epics e Historias de Usuario de Alto Nivel)
+
+Epic 1: Gestión de Habitaciones y reservas
+
+· HU1: Como administrador, quiero poder agregar, editar y desactivar habitaciones (número, tipo, capacidad, precio) para mantener un catálogo actualizado.
+
+· HU2: Como cliente, quiero buscar habitaciones disponibles filtrando por fechas y número de huéspedes para encontrar opciones que se ajusten a mis necesidades.
+
+.HU3: Como turista que viaja en grupo, quiero poder reservar varios servicios en un solo paquete para facilitar la organización del viaje sin depender de múltiples reservas.
+
+· HU4: Como viajero, quiero buscar y comparar hoteles, tours y paquetes en una sola plataforma para ahorrar tiempo y evitar navegar en múltiples sitios web.
+
+· HU5: Como usuario que planea un viaje, quiero generar un presupuesto estimado según mis preferencias para tener un mejor control de mis gastos.
+
+. HU6: Como cliente que busca ofertas, quiero aplicar filtros por precio, ubicación, actividades y valoraciones para encontrar fácilmente la opción que mejor se adapte a mí.
+
+. HU7: Como viajero indeciso, quiero recibir recomendaciones personalizadas con ayuda de IA para descubrir opciones que se ajusten a mis gustos y necesidades.
+
+Epic 2: Gestión de Paquetes Turísticos y actividades.
+
+.HU8: Como usuario frecuente, quiero guardar mis viajes anteriores para poder reutilizar planes o inspirarme en experiencias pasadas.
+
+· HU9: Como administrador de la plataforma, quiero gestionar la información de hoteles, tours y paquetes ofrecidos para mantener actualizada la oferta turística
+
+· HU10: Como cliente con una reserva confirmada, quiero ver y añadir paquetes turísticos a mi estancia para planificar mis vacaciones.
+
+Epic 3: Gestión de Pagos
+
+· HU11: Como sistema, debo registrar todos los pagos (reserva, paquete) y actualizar el estado de la reserva (pendiente/confirmada/cancelada).
+
+· HU12: Como propietario, quiero generar reportes de ingresos por habitaciones y paquetes para analizar las finanzas.
+
+Epic 4: Gestión de Usuarios y Roles
+
+· HU13: Como CEO, quiero asignar roles (usuarios, propietarios) a los usuarios del sistema para controlar el acceso a funciones.
+
+
+4. Priorización Inicial (MoSCoW)
+
+· MUST HAVE (Lo promordial): HU1, HU2,  HU4, HU9, HU11, HU13. (Sin esto, el sistema no funciona).
+· SHOULD HAVE (Importante): HU5, HU6. (Funcionalidad valiosa para la primera versión).
+· COULD HAVE (Deseable): HU8, HU10 alertas por correo.
+· WON'T HAVE (Por ahora): HU3, HU7, HU12 Promociones complejas, subida de fotos.
+
+---
+
+Fase 1: Sprint Planning
+
+Ahora, ya tengo definido la vision y preparacion para trabajar con el equipo de desarrollo para planificar el primer ciclo de trabajo.
+
+1. Objetivo: "Al final de este sprint de 1 semanas, queremos que un cliente pueda buscar una habitación disponible, realizar una reserva con tours y actividades, y que el sistema evite el overbooking."
+2. Backlog Priorizado: Lees las historias de usuario que has priorizado como "MUST HAVE" (lo primordial).
+3. Explicar el "QUÉ": Converso con mi equipo a responder a todas sus preguntas sobre las HU. ¿Qué datos necesita una habitación? ¿Qué pasa si una reserva se cancela? 
+4. Negociar y Refinar: El equipo te dirá cuánto de ese trabajo pueden comprometerse a hacer. Es una negociación, no una imposición.
+5. "DONE": Asegúrate de que todos entienden cuándo una HU está terminada. Ej: "¿'Terminado' incluye pruebas? ¿Incluye el diseño responsive?" "Tester".
+
+Resultado en el Planning:
+
+· Un Sprint Goal claro ("Reserva Básica Funcional").
+· Un Sprint Backlog acordado (las HU seleccionadas para este sprint).
+· Criterios de Aceptación claros para cada HU.
+
+---
+
+Fase 2: Durante el Sprint
+
+1. Disponibilidad: Como ProductOwner estoy disponible para que el equipo me consulte dudas.
+2. Refinamiento del Backlog (Backlog Grooming): Me tomo el tiempo para preparar el próximo sprint.
+3. Validar el Trabajo Terminado (Acceptance Testing): Al final del sprint, el equipo debera presentarme el codigo funcional acorde a lo que yo les pedi y lo que quiere mi cliente(Decameron).
+
+
+
+Fase 3: Revisión y Retrospectiva
+
+Sprint Review (Demostración):
+
+· Como ProductOwner sere el presentador principal.
+· Se mostrara a los stakeholders la funcionalidad terminada del sprint, basándome en el Sprint Goal. Explicando qué se hizo y qué no se hizo y recoges feedback. "Como pueden ver, ya se puede hacer una reserva. Para el próximo sprint, añadiremos los paquetes turísticos".
+
+Sprint Retrospective:
+
+· Como ProductOwner estare como participante activo.
+· Junto con el Scrum Master y el equipo, analizamos nuestro proceso. "¿Qué nos fue bien? ¿Qué podemos mejorar?". Como PO, puedes dar feedback como "Necesito estar más disponible para preguntas" o "El equipo entendió muy bien las historias de usuario".
