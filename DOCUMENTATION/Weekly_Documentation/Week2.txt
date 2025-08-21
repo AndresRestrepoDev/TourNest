@@ -17,7 +17,7 @@ Estructura inicial del proyecto e integración con la base de datos. Configurar 
 
 Viernes: 
 CRUD esencial. Implementar funciones para crear y leer datos con persistencia en la base de datos, junto con las vistas necesarias
--> CRUD Andrs Restrepo
+-> CRUD Andres Restrepo
 -> Vistas Stiven Hidalgo
 
 Entregables Semana 2:

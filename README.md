@@ -43,7 +43,7 @@ TourNest/
 │   │   ├── 📄 Week1.txt           
 │   │   ├── 📄 Week2.txt           
 │   │   └── 📄 Week3.txt   
-│   ├── 📄 Project_Approach.txt.txt
+│   ├── 📄 Project_Approach.txt
 │   ├── 📄 PixelPioneers_Technical_Document.txt 
 │   └── 📄 EvidencesSCRUM.txt           
 ├── 📁 DATA
