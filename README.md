@@ -59,3 +59,44 @@ TourNest/
 │   └── 📄 server.py
 └── 📄 README.md                 
 ```
+
+# 🏨 TourNest Backend
+
+Backend del proyecto **TourNest**, un sistema para gestionar hoteles, habitaciones, actividades y reservas turísticas.  
+Este backend está hecho en **Python (Flask)** con conexión a **MySQL**.
+
+---
+
+## 🚀 Requisitos previos
+- Python 3.10 o superior
+- MySQL instalado y corriendo
+- Git instalado
+
+---
+
+## 📦 Instalación del proyecto
+
+1. **Clonar el repositorio**
+   ```bash
+   git clone https://github.com/AndresRestrepoDev/TourNest.git
+
+2. **Crear un entorno virtual**
+
+    python3 -m venv venv
+    source venv/bin/activate
+
+3. **Instalar dependencias**
+
+    pip install -r requirements.txt
+
+4. **Configurar variables de entorno**
+
+    Crear un archivo .env en la raíz del proyecto con tus credenciales:
+
+    DB_HOST=localhost
+    DB_USER=root
+    DB_PASSWORD=tu_password
+    DB_NAME=TourNest
+    
+    Ejecutar el servidor -> python server.py
+

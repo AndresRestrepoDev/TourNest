@@ -9,3 +9,6 @@ En esta reunión, revisamos el proyecto con una perspectiva más clara gracias a
 
 Daily #3
 El enfoque de esta reunión fue la definición de nuevas tareas y la finalización del documento técnico. Además, hicimos un énfasis en el uso de Git para el trabajo colaborativo. Reforzamos los comandos esenciales y establecimos reglas para la gestión de ramas para evitar fusiones incorrectas en el código.
+
+Daily #4
+En este daily repartimos tareas de la semana 2 para por fin dejar listo todo el tema de la documentación y seguir con la parte de tirar codigo. El product owner termino el sprint plannig y dejo listo el product backlog, Andres empezo a crear el script de la base de datos, Jeronimo creo el modelo relacional y la compañera Yancelly empezo a crear el figma
