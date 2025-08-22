@@ -1,0 +1,21 @@
+# Entorno virtual
+venv/
+
+# Archivos de configuración sensibles
+.env
+
+# Archivos temporales de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de logs
+*.log
+
+# Archivos de base de datos locales
+*.sqlite3
+
+# Archivos de sistema (Linux/Mac/Windows)
+.DS_Store
+Thumbs.db

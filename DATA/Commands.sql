@@ -1,186 +1,154 @@
--- ================================================
--- SCRIPT BASE DE DATOS: SISTEMA HOTEL + ACTIVIDADES
--- ================================================
+CREATE DATABASE IF NOT EXISTS TourNest;
+USE TourNest;
 
--- 1. Crear Base de Datos
-CREATE DATABASE IF NOT EXISTS sistema_hotel;
-USE sistema_hotel;
-
--- ================================================
--- 2. Tablas principales
--- ================================================
-
--- Tabla CEO
 CREATE TABLE ceo (
     id_ceo INT AUTO_INCREMENT PRIMARY KEY,
-    correo VARCHAR(100) UNIQUE NOT NULL,
-    contrasena VARCHAR(100) NOT NULL
+    email VARCHAR(200) UNIQUE NOT NULL,
+    password VARCHAR(200) NOT NULL
 );
 
--- Tabla Usuario
-CREATE TABLE usuario (
-    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    correo VARCHAR(100) UNIQUE NOT NULL,
-    contrasena VARCHAR(100) NOT NULL,
-    documento VARCHAR(50) UNIQUE NOT NULL,
-    fecha_nacimiento DATE NOT NULL,
-    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    telefono VARCHAR(20)
+CREATE TABLE users (
+    id_user INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(200) UNIQUE NOT NULL,
+    password VARCHAR(200) NOT NULL,
+    document VARCHAR(100) UNIQUE NOT NULL,
+    date_birth DATE NOT NULL,
+    registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    phone VARCHAR(20)
 );
 
--- Tabla Propietario
-CREATE TABLE propietario (
-    id_propietario INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    correo VARCHAR(100) UNIQUE NOT NULL,
-    contrasena VARCHAR(100) NOT NULL,
-    nit VARCHAR(50) UNIQUE NOT NULL,
-    fecha_nacimiento DATE NOT NULL,
-    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    telefono VARCHAR(20)
+CREATE TABLE owners (
+    id_owner INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(200) UNIQUE NOT NULL,
+    password VARCHAR(200) NOT NULL,
+    nit VARCHAR(100) UNIQUE NOT NULL,
+    date_birth DATE NOT NULL,
+    registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    phone VARCHAR(20)
 );
 
--- Tabla Hoteles
-CREATE TABLE hotel (
+CREATE TABLE hotels (
     id_hotel INT AUTO_INCREMENT PRIMARY KEY,
-    id_propietario INT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    descripcion TEXT,
-    ciudad VARCHAR(100) NOT NULL,
-    promedio_calificacion DECIMAL(3,2) DEFAULT 0,
-    img_url VARCHAR(255),
-    FOREIGN KEY (id_propietario) REFERENCES propietario(id_propietario) ON DELETE CASCADE
+    id_owner INT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    city VARCHAR(100) NOT NULL,
+    rating_average DECIMAL(3,2) DEFAULT 0,
+    img_url VARCHAR(300),
+    FOREIGN KEY (id_owner) REFERENCES owners(id_owner) ON DELETE CASCADE
 );
 
--- Tabla Habitaciones
-CREATE TABLE habitacion (
-    id_habitacion INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE rooms (
+    id_room INT AUTO_INCREMENT PRIMARY KEY,
     id_hotel INT NOT NULL,
-    capacidad INT NOT NULL,
-    precio DECIMAL(10,2) NOT NULL,
-    img_url VARCHAR(255),
-    numero_habitacion VARCHAR(20) NOT NULL,
-    estado ENUM('disponible', 'ocupada') DEFAULT 'disponible',
-    FOREIGN KEY (id_hotel) REFERENCES hotel(id_hotel) ON DELETE CASCADE
+    capacity INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    img_url VARCHAR(300),
+    number_room VARCHAR(20) NOT NULL,
+    state ENUM('available', 'occupied') DEFAULT 'available',
+    FOREIGN KEY (id_hotel) REFERENCES hotels(id_hotel) ON DELETE CASCADE
 );
 
--- Tabla Actividades
-CREATE TABLE actividad (
-    id_actividad INT AUTO_INCREMENT PRIMARY KEY,
-    id_propietario INT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    descripcion TEXT,
-    precio DECIMAL(10,2) NOT NULL,
-    duracion VARCHAR(50),
-    img_url VARCHAR(255),
-    lugar VARCHAR(100),
-    cupos_disponibles INT NOT NULL,
-    FOREIGN KEY (id_propietario) REFERENCES propietario(id_propietario) ON DELETE CASCADE
+CREATE TABLE activitys (
+    id_activity INT AUTO_INCREMENT PRIMARY KEY,
+    id_owner INT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    price DECIMAL(10,2) NOT NULL,
+    duration VARCHAR(50),
+    img_url VARCHAR(300),
+    place VARCHAR(200),
+    quota_available INT NOT NULL,
+    FOREIGN KEY (id_owner) REFERENCES owners(id_owner) ON DELETE CASCADE
 );
 
--- ================================================
--- 3. Reservas (puede ser de habitacion O actividad)
--- ================================================
-
-CREATE TABLE reserva (
-    id_reserva INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    id_habitacion INT NULL,
-    id_actividad INT NULL,
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
-    estado ENUM('pendiente','confirmada','cancelada') DEFAULT 'pendiente',
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE,
-    FOREIGN KEY (id_habitacion) REFERENCES habitacion(id_habitacion) ON DELETE SET NULL,
-    FOREIGN KEY (id_actividad) REFERENCES actividad(id_actividad) ON DELETE SET NULL
+CREATE TABLE reserves (
+    id_reserve INT AUTO_INCREMENT PRIMARY KEY,
+    id_user INT NOT NULL,
+    id_room INT NULL,
+    id_activity INT NULL,
+    date_init DATE NOT NULL,
+    date_end DATE NOT NULL,
+    state ENUM('pending','confirmed','canceled') DEFAULT 'pending',
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE,
+    FOREIGN KEY (id_room) REFERENCES rooms(id_room) ON DELETE SET NULL,
+    FOREIGN KEY (id_activity) REFERENCES activitys(id_activity) ON DELETE SET NULL
 );
 
--- ================================================
--- 4. Reseñas (pueden ser de hotel O actividad)
--- ================================================
-
-CREATE TABLE resena (
-    id_resena INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
+CREATE TABLE reviews (
+    id_reviews INT AUTO_INCREMENT PRIMARY KEY,
+    id_user INT NOT NULL,
     id_hotel INT NULL,
-    id_actividad INT NULL,
-    comentario TEXT,
-    calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE,
-    FOREIGN KEY (id_hotel) REFERENCES hotel(id_hotel) ON DELETE SET NULL,
-    FOREIGN KEY (id_actividad) REFERENCES actividad(id_actividad) ON DELETE SET NULL
+    id_activity INT NULL,
+    comment TEXT,
+    rating INT CHECK (rating BETWEEN 1 AND 5),
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE,
+    FOREIGN KEY (id_hotel) REFERENCES hotels(id_hotel) ON DELETE SET NULL,
+    FOREIGN KEY (id_activity) REFERENCES activitys(id_activity) ON DELETE SET NULL
 );
 
--- ================================================
--- 5. Vista Historial de Reservas
--- ================================================
-CREATE VIEW historial_reservas AS
+SELECT * FROM history_reviews;
+
+CREATE VIEW history_reviews AS
 SELECT 
-    r.id_reserva,
-    u.nombre AS usuario,
-    r.fecha_inicio,
-    r.fecha_fin,
-    r.estado,
-    h.nombre AS hotel,
-    hab.numero_habitacion,
-    a.nombre AS actividad
-FROM reserva r
-    INNER JOIN usuario u ON r.id_usuario = u.id_usuario
-    LEFT JOIN habitacion hab ON r.id_habitacion = hab.id_habitacion
-    LEFT JOIN hotel h ON hab.id_hotel = h.id_hotel
-    LEFT JOIN actividad a ON r.id_actividad = a.id_actividad;
+    r.id_reserve,
+    u.name AS users,
+    r.date_init,
+    r.date_end,
+    r.state,
+    h.name AS hotels,
+    hab.number_room,
+    a.name AS activitys
+FROM reserves r
+    INNER JOIN users u ON r.id_user = u.id_user
+    LEFT JOIN rooms hab ON r.id_room = hab.id_room
+    LEFT JOIN hotels h ON hab.id_hotel = h.id_hotel
+    LEFT JOIN activitys a ON r.id_activity = a.id_activity;
+
+INSERT INTO ceo (email, password) VALUES
+('admin@tournest.com', 'admin123');
+
+INSERT INTO users (name, email, password, document, date_birth, phone) VALUES
+('Carlos Gómez', 'carlosg@example.com', 'pass123', 'CC1001', '1990-05-12', '3001234567'),
+('María López', 'marial@example.com', 'pass123', 'CC1002', '1988-08-22', '3019876543'),
+('Andrés Restrepo', 'andresr@example.com', 'pass123', 'CC1003', '1995-11-03', '3024567890'),
+('Laura Torres', 'laurat@example.com', 'pass123', 'CC1004', '1992-07-19', '3106547891');
+
+INSERT INTO owners (name, email, password, nit, date_birth, phone) VALUES
+('Hotel Manager SAS', 'hotelmanager@example.com', 'pass123', 'NIT900111', '1980-01-15', '3157896541'),
+('Adventure Tours LTDA', 'adventure@example.com', 'pass123', 'NIT900222', '1982-09-09', '3169873210');
+
+INSERT INTO hotels (id_owner, name, description, city, rating_average, img_url) VALUES
+(1, 'Hotel El Dorado', 'Un hotel de lujo en el centro de Medellín.', 'Medellín', 4.5, 'https://example.com/hotel1.jpg'),
+(1, 'Hotel Playa Bonita', 'Hotel frente al mar Caribe.', 'Cartagena', 4.8, 'https://example.com/hotel2.jpg');
+
+INSERT INTO rooms (id_hotel, capacity, price, img_url, number_room, state) VALUES
+(1, 2, 150000, 'https://example.com/room101.jpg', '101', 'available'),
+(1, 4, 250000, 'https://example.com/room102.jpg', '102', 'occupied'),
+(2, 2, 200000, 'https://example.com/room201.jpg', '201', 'available'),
+(2, 3, 280000, 'https://example.com/room202.jpg', '202', 'available');
+
+INSERT INTO activitys (id_owner, name, description, price, duration, img_url, place, quota_available) VALUES
+(2, 'Tour en Guatapé', 'Visita a la piedra del Peñol y el pueblo de Guatapé.', 120000, '8 horas', 'https://example.com/tour1.jpg', 'Guatapé, Antioquia', 20),
+(2, 'Buceo en Islas del Rosario', 'Experiencia de buceo en aguas cristalinas.', 250000, '5 horas', 'https://example.com/tour2.jpg', 'Islas del Rosario, Cartagena', 15);
+
+INSERT INTO reserves (id_user, id_room, id_activity, date_init, date_end, state) VALUES
+(1, 1, NULL, '2025-09-01', '2025-09-05', 'confirmed'),
+(2, 2, NULL, '2025-09-10', '2025-09-15', 'pending'),
+(3, NULL, 1, '2025-09-20', '2025-09-20', 'confirmed'),
+(4, NULL, 2, '2025-09-25', '2025-09-25', 'canceled');
+
+INSERT INTO reviews (id_user, id_hotel, id_activity, comment, rating) VALUES
+(1, 1, NULL, 'Excelente servicio y muy buena ubicación.', 5),
+(2, 1, NULL, 'El hotel estaba limpio pero un poco ruidoso.', 3),
+(3, NULL, 1, 'El tour fue increíble, super recomendado.', 5),
+(4, NULL, 2, 'La experiencia de buceo fue espectacular.', 4);
 
 
--- CEO
-INSERT INTO ceo (correo, contrasena)
-VALUES 
-('admin@hotelplus.com', 'admin123');
 
--- Usuarios
-INSERT INTO usuario (nombre, correo, contrasena, documento, fecha_nacimiento, fecha_registro, telefono)
-VALUES
-('Juan Pérez', 'juanperez@mail.com', '1234', '100200300', '1990-05-15', NOW(), '3001234567'),
-('María López', 'marialopez@mail.com', 'abcd', '200300400', '1985-09-22', NOW(), '3019876543'),
-('Carlos Gómez', 'carlosgomez@mail.com', 'pass123', '300400500', '1998-11-30', NOW(), '3024567890');
 
--- Propietarios
-INSERT INTO propietario (nombre, correo, contrasena, nit, fecha_nacimiento, fecha_registro, telefono)
-VALUES
-('Hotelera Andina', 'contacto@andina.com', 'andina123', '900123456', '1975-03-10', NOW(), '3105556677'),
-('Tours Medellín', 'info@toursmedellin.com', 'medellin2024', '901234567', '1980-08-05', NOW(), '3112223344');
 
--- Hoteles
-INSERT INTO hotel (id_propietario, nombre, descripcion, ciudad, promedio_calificacion, img_url)
-VALUES
-(1, 'Hotel Andino', 'Un hotel en el centro de Bogotá', 'Bogotá', 4.5, 'andino.jpg'),
-(1, 'Hotel Montaña', 'Hotel campestre en las afueras', 'Medellín', 4.2, 'montana.jpg');
-
--- Habitaciones
-INSERT INTO habitacion (id_hotel, capacidad, precio, img_url, numero_habitacion, estado)
-VALUES
-(1, 2, 150000, 'habitacion1.jpg', '101', 'disponible'),
-(1, 4, 250000, 'habitacion2.jpg', '102', 'ocupada'),
-(2, 2, 180000, 'habitacion3.jpg', '201', 'disponible');
-
--- Actividades
-INSERT INTO actividad (id_propietario, nombre, descripcion, precio, duracion, img_url, lugar, cupos_disponibles)
-VALUES
-(2, 'City Tour Medellín', 'Recorrido por lugares turísticos de Medellín', 120000, '4 horas', 'citytour.jpg', 'Medellín', 20),
-(2, 'Guatapé y Piedra del Peñol', 'Excursión a Guatapé con ascenso a la Piedra del Peñol', 200000, '8 horas', 'guatape.jpg', 'Guatapé', 15);
-
--- Reservas (ejemplo: algunas son hotel, otras actividad)
-INSERT INTO reserva (id_usuario, id_habitacion, id_actividad, fecha_inicio, fecha_fin, estado)
-VALUES
-(1, 1, NULL, '2025-08-25', '2025-08-28', 'confirmada'),  -- Juan reserva habitación
-(2, NULL, 1, '2025-09-01', '2025-09-01', 'pendiente'),   -- María reserva tour
-(3, 3, NULL, '2025-08-22', '2025-08-23', 'cancelada');   -- Carlos reserva habitación
-
--- Reseñas
-INSERT INTO resena (id_usuario, id_hotel, id_actividad, comentario, calificacion, fecha)
-VALUES
-(1, 1, NULL, 'Muy buen hotel, excelente servicio.', 5, NOW()),
-(2, NULL, 1, 'El tour estuvo genial, buen guía.', 4, NOW()),
-(3, 2, NULL, 'El hotel estaba bien, pero un poco costoso.', 3, NOW());
 

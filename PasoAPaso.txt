@@ -1,0 +1,13 @@
+la mejor práctica es siempre usar un entorno virtual para cada proyecto. Esto te ahorrará muchos dolores de cabeza con conflictos de dependencias en el futuro.
+
+python3 -m venv venv
+source venv/bin/activate
+
+Voy a contruir una conexion a una base de datos usando python, que librerias debo descargar para gestionar el servidor, para hacer la conexion a la base de datos mysql y que libreria para las variables de entorno
+
+pip install flask mysql-connector-python python-dotenv
+
+Congela las dependencias, para que no olvides qué instalaste:  pip freeze > requirements.txt
+
+Así tendrás un archivo requirements.txt con todas las versiones.
+En otro PC puedes reinstalar todo con: pip install -r requirements.txt
