@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TourNest - Inicio</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <nav class="nav-container">
+      <h1 class="logo">TourNest</h1>
+      <a href="./views/login.html" class="btn-login">Login</a>
+    </nav>
+  </header>
+
+  <!-- HERO (Slider) -->
+  <section class="hero">
+    <div class="hero-slider">
+      <div class="slide active" style="background-image: url('https://picsum.photos/1600/900?beach');"></div>
+      <div class="slide" style="background-image: url('https://picsum.photos/1600/900?mountain');"></div>
+      <div class="slide" style="background-image: url('https://picsum.photos/1600/900?city');"></div>
+    </div>
+
+    <!-- Contenido Hero -->
+    <div class="hero-content">
+      <h2>Vive tu viaje con TourNest</h2>
+      <p>Reserva habitaciones y disfruta de paquetes turísticos inolvidables</p>
+    </div>
+
+    <!-- Controles del slider -->
+    <button class="arrow left">&#10094;</button>
+    <button class="arrow right">&#10095;</button>
+    <div class="dots"></div>
+  </section>
+
+  <!-- HABITACIONES -->
+  <section class="section">
+    <h3 class="section-title">Habitaciones Destacadas</h3>
+    <div class="cards">
+      <div class="card">
+        <img src="https://picsum.photos/400/250?hotel" alt="Habitación">
+        <div class="card-content">
+          <h4>Suite Familiar</h4>
+          <p>$120 / noche</p>
+          <a href="#">Ver más</a>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://picsum.photos/400/250?room" alt="Habitación">
+        <div class="card-content">
+          <h4>Habitación Deluxe</h4>
+          <p>$95 / noche</p>
+          <a href="#">Ver más</a>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://picsum.photos/400/250?suite" alt="Habitación">
+        <div class="card-content">
+          <h4>Suite Ejecutiva</h4>
+          <p>$150 / noche</p>
+          <a href="#">Ver más</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAQUETES -->
+  <section class="section bg-light">
+    <h3 class="section-title">Paquetes Turísticos</h3>
+    <div class="cards">
+      <div class="card">
+        <img src="https://picsum.photos/400/250?beach" alt="Tour playa">
+        <div class="card-content">
+          <h4>Tour Caribe</h4>
+          <p>⭐⭐⭐⭐☆</p>
+          <a href="#">Más detalles</a>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://picsum.photos/400/250?mountain" alt="Tour montaña">
+        <div class="card-content">
+          <h4>Aventura en la Montaña</h4>
+          <p>⭐⭐⭐⭐⭐</p>
+          <a href="#">Más detalles</a>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://picsum.photos/400/250?city" alt="Tour ciudad">
+        <div class="card-content">
+          <h4>Tour Medellín</h4>
+          <p>⭐⭐⭐⭐☆</p>
+          <a href="#">Más detalles</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>&copy; 2025 TourNest - Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Script para el Slider -->
+  <script>
+    let slides = document.querySelectorAll(".slide");
+    let dotsContainer = document.querySelector(".dots");
+    let index = 0;
+    let interval;
+
+    // Crear puntos
+    slides.forEach((_, i) => {
+      let dot = document.createElement("span");
+      dot.classList.add("dot");
+      if (i === 0) dot.classList.add("active");
+      dot.addEventListener("click", () => {
+        index = i;
+        showSlide(index);
+        resetInterval();
+      });
+      dotsContainer.appendChild(dot);
+    });
+
+    let dots = document.querySelectorAll(".dot");
+
+    function showSlide(i) {
+      slides.forEach(slide => slide.classList.remove("active"));
+      dots.forEach(dot => dot.classList.remove("active"));
+      slides[i].classList.add("active");
+      dots[i].classList.add("active");
+    }
+
+    function nextSlide() {
+      index = (index + 1) % slides.length;
+      showSlide(index);
+    }
+
+    function prevSlide() {
+      index = (index - 1 + slides.length) % slides.length;
+      showSlide(index);
+    }
+
+    function resetInterval() {
+      clearInterval(interval);
+      interval = setInterval(nextSlide, 5000);
+    }
+
+    document.querySelector(".right").addEventListener("click", () => {
+      nextSlide();
+      resetInterval();
+    });
+
+    document.querySelector(".left").addEventListener("click", () => {
+      prevSlide();
+      resetInterval();
+    });
+
+    // autoplay
+    interval = setInterval(nextSlide, 5000);
+  </script>
+
+</body>
+</html>
