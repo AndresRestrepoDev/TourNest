@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CEO Dashboard</title>
+  <link rel="stylesheet" href="./ceo.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Barra lateral -->
+    <aside class="sidebar">
+      <h2>CEO Panel</h2>
+      <button data-section="hoteles">Hoteles</button>
+      <button data-section="habitaciones">Habitaciones</button>
+      <button data-section="actividades">Actividades</button>
+      <button data-section="usuarios">Usuarios</button>
+      <button data-section="propietarios">Propietarios</button>
+      <hr>
+      <button id="logoutBtn" class="logout-btn">Cerrar sesión</button>
+    </aside>
+
+    <!-- Contenedor principal -->
+    <main class="main-content">
+      <!-- HOTELS -->
+      <div id="section-hoteles" class="section">
+        <div class="center-container">
+          <h2>Gestión de Hoteles</h2>
+          <form id="hotelForm">
+            <input type="number" id="id_owner" placeholder="ID propietario" required>
+            <input type="text" id="name" placeholder="Nombre del hotel" required>
+            <input type="text" id="city" placeholder="Ciudad" required>
+            <input type="text" id="description" placeholder="Descripción" required>
+            <input type="number" id="rating_average" placeholder="Calificación" min="1" max="5" required>
+            <input type="text" id="img_url" placeholder="URL de imagen (opcional)">
+            <button type="submit">Agregar Hotel</button>
+          </form>
+        </div>
+        <div id="hotel-list" class="hotel-container"></div>
+      </div>
+
+      <!-- HABITACIONES -->
+      <div id="section-habitaciones" class="section" style="display:none;">
+        <div class="center-container">
+          <h2>Gestión de Habitaciones</h2>
+          <form id="habitacionForm">
+            <input type="number" id="hotel_id" placeholder="ID del Hotel" required>
+            <input type="text" id="numero_habitacion" placeholder="Número de Habitación" required>
+            <input type="number" id="capacidad" placeholder="Capacidad" required>
+            <input type="number" id="precio" placeholder="Precio" required>
+            <input type="text" id="estado" placeholder="Estado (disponible/ocupada)" required>
+            <button type="submit">Agregar Habitación</button>
+          </form>
+        </div>
+        <div id="room-list" class="room-container"></div>
+      </div>
+
+      <!-- ACTIVIDADES -->
+      <div id="section-actividades" class="section" style="display:none;">
+        <div class="center-container">
+          <h2>Gestión de Actividades</h2>
+          <form id="actividadForm">
+            <input type="text" id="actividad_nombre" placeholder="Nombre de la Actividad" required>
+            <input type="text" id="actividad_descripcion" placeholder="Descripción" required>
+            <input type="number" id="actividad_precio" placeholder="Precio" required>
+            <button type="submit">Agregar Actividad</button>
+          </form>
+        </div>
+        <div id="actividad-list" class="hotel-container"></div>
+      </div>
+
+      <!-- USUARIOS -->
+      <div id="section-usuarios" class="section" style="display:none;">
+        <div class="center-container">
+          <h2>Gestión de Usuarios</h2>
+          <form id="usuarioForm">
+            <input type="text" id="usuario_nombre" placeholder="Nombre" required>
+            <input type="email" id="usuario_email" placeholder="Correo" required>
+            <input type="password" id="usuario_password" placeholder="Contraseña" required>
+            <button type="submit">Agregar Usuario</button>
+          </form>
+        </div>
+        <div id="usuario-list" class="hotel-container"></div>
+      </div>
+
+      <!-- PROPIETARIOS -->
+      <div id="section-propietarios" class="section" style="display:none;">
+        <div class="center-container">
+          <h2>Gestión de Propietarios</h2>
+          <form id="propietarioForm">
+            <input type="text" id="propietario_nombre" placeholder="Nombre" required>
+            <input type="email" id="propietario_email" placeholder="Correo" required>
+            <button type="submit">Agregar Propietario</button>
+          </form>
+        </div>
+        <div id="propietario-list" class="hotel-container"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="./ceo-dashboard.js"></script>
+</body>
+</html>
