@@ -16,7 +16,8 @@ db_config = {
     'host': os.getenv("DB_HOST"),
     'user': os.getenv("DB_USER"),
     'password': os.getenv("DB_PASSWORD"),
-    'database': os.getenv("DB_NAME")
+    'database': os.getenv("DB_NAME"),
+    'autocommit': True   # 🔑 Muy importante para evitar locks
 }
 
 def get_db_connection():  # Función para obtener una conexión a la base de datos
@@ -49,7 +50,7 @@ def login():
     if ceo:
         cursor.close()
         connection.close()
-        return jsonify({"role": "ceo", "message": "Bienvenido CEO"}), 200
+        return jsonify({"role": "ceo", "id": ceo["id_ceo"], "message": "Bienvenido CEO"}), 200
 
     # Validar Owner
     sql_owner = "SELECT * FROM owners WHERE email=%s AND password=%s"
@@ -58,7 +59,7 @@ def login():
     if owner:
         cursor.close()
         connection.close()
-        return jsonify({"role": "owner", "message": "Bienvenido Propietario"}), 200
+        return jsonify({"role": "owner", "id": owner["id_owner"], "name": owner["name"], "message": "Bienvenido Propietario"}), 200
 
     # Validar User
     sql_user = "SELECT * FROM users WHERE email=%s AND password=%s"
@@ -67,7 +68,7 @@ def login():
     if user:
         cursor.close()
         connection.close()
-        return jsonify({"role": "user", "message": "Bienvenido Usuario"}), 200
+        return jsonify({"role": "user", "id": user["id_user"], "name": user["name"], "message": "Bienvenido Usuario"}), 200
 
     # Si no encontró nada
     cursor.close()
@@ -467,6 +468,22 @@ def delete_activity(id_activity):
     cursor.close()
     conn.close()
     return jsonify({"message": "Actividad eliminada exitosamente"})
+
+
+# ruta para traer hoteles por owner
+@app.route("/hotels/owner/<int:owner_id>", methods=["GET"])
+def get_hotels_by_owner(owner_id):
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+
+    sql = "SELECT * FROM hotels WHERE id_owner = %s"
+    cursor.execute(sql, (owner_id,))
+    hotels = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+    return jsonify(hotels)
+
 
 
 

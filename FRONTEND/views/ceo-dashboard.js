@@ -1,23 +1,9 @@
 const apiHotel = "http://localhost:5000/hotels";
 
-document.addEventListener("DOMContentLoaded", () => {
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
-  const role = localStorage.getItem("role");
-
-  if (isLoggedIn !== "true" || role !== "ceo") {
-    alert("Acceso no autorizado");
-    window.location.href = "./login.html"; // vuelve al login
-  }
-});
-
-document.getElementById("logoutBtn").addEventListener("click", () => {
-  localStorage.clear(); // elimina toda la sesión
-  window.location.href = "./login.html"; // vuelve al login
-});
-
 document.addEventListener("DOMContentLoaded", async () => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const role = localStorage.getItem("role");
+  const ownerId = localStorage.getItem("ownerId"); // recuperas el id
 
   if (isLoggedIn !== "true" || role !== "ceo") {
     alert("Acceso no autorizado");
@@ -25,17 +11,46 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Cargar hoteles
-  await loadHotels();
-  await loadRooms();
-  await loadActivities();
+  console.log("El ID del propietario logueado es:", ownerId);
+
+  // Aquí podrías usar el ownerId para traer SOLO sus hoteles
+  await loadHotels(ownerId);
+  await loadRooms(ownerId);
+  await loadActivities(ownerId);
 });
+
 
 // Botón logout
 document.getElementById("logoutBtn").addEventListener("click", () => {
   localStorage.clear();
   window.location.href = "../index.html";
 });
+
+async function cargarOwnersHotels() {
+  try {
+    const response = await fetch("http://localhost:5000/owners"); 
+    const owners = await response.json();
+
+    const select = document.getElementById("id_owner_hotel");
+
+    // resetear opciones
+    select.innerHTML = '<option value="">Seleccione un Propietario</option>';
+
+    // agregar cada owner
+    owners.forEach(owner => {
+      const option = document.createElement("option");
+      option.value = owner.id_owner;
+      option.textContent = owner.name;
+      select.appendChild(option);
+    });
+
+  } catch (error) {
+    console.error("Error cargando owners:", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", cargarOwnersHotels);
+
 
 let hoteles = []; // variable global para almacenar los hoteles
 
@@ -102,7 +117,7 @@ container.addEventListener("click", (e) => {
     if (!hotel) return alert("Hotel no encontrado");
 
     // Llenar el formulario con los datos
-    document.getElementById("id_owner").value = hotel.id_owner;
+    document.getElementById("id_owner_hotel").value = hotel.id_owner;
     document.getElementById("name").value = hotel.name;
     document.getElementById("city").value = hotel.city;
     document.getElementById("description").value = hotel.description;
@@ -121,7 +136,7 @@ hotelForm.addEventListener("submit", async (e) => {
   const editId = hotelForm.dataset.editId; // Si existe, estamos editando
 
   const hotelData = {
-    id_owner: document.getElementById("id_owner").value,
+    id_owner: document.getElementById("id_owner_hotel").value,
     name: document.getElementById("name").value,
     city: document.getElementById("city").value,
     description: document.getElementById("description").value,
@@ -291,6 +306,7 @@ habitacionForm.addEventListener("submit", async (e) => {
     let res;
     if (editId) {
       // Modo edición → PUT
+        console.log("Editando habitación con ID:", editId, roomData);
       res = await fetch(`${apiRoom}/${editId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -307,7 +323,7 @@ habitacionForm.addEventListener("submit", async (e) => {
 
     if (res.ok) {
       alert(editId ? "Habitación actualizada ✅" : "Habitación agregada ✅");
-      delete habitacionForm.dataset.editId; // limpiar modo edición
+      habitacionForm.removeAttribute("data-edit-id");
       habitacionForm.querySelector("button[type='submit']").textContent = "Agregar Habitación";
       habitacionForm.reset();
       await loadRooms(); // recargar lista
@@ -327,22 +343,19 @@ async function cargarOwners() {
     const response = await fetch("http://localhost:5000/owners"); 
     const owners = await response.json();
 
-    // Trae todos los selects con esa clase
-    const selects = document.querySelectorAll(".actividad_owner");
+    const select = document.getElementById("actividad_owner");
 
-    // Recorremos cada select
-    selects.forEach(select => {
-      // resetear opciones
-      select.innerHTML = '<option value="">Seleccione un Propietario</option>';
+    // resetear opciones
+    select.innerHTML = '<option value="">Seleccione un Propietario</option>';
 
-      // agregar cada owner como opción
-      owners.forEach(owner => {
-        const option = document.createElement("option");
-        option.value = owner.id_owner;    // valor (id)
-        option.textContent = owner.name;  // texto visible (nombre)
-        select.appendChild(option);
-      });
+    // agregar cada owner
+    owners.forEach(owner => {
+      const option = document.createElement("option");
+      option.value = owner.id_owner;
+      option.textContent = owner.name;
+      select.appendChild(option);
     });
+
   } catch (error) {
     console.error("Error cargando owners:", error);
   }
@@ -350,7 +363,7 @@ async function cargarOwners() {
 
 
 // Llamar cuando cargue la página o la sección
-document.addEventListener("DOMContentLoaded", cargarOwners, cargarHoteles);
+document.addEventListener("DOMContentLoaded", cargarOwners, cargarHoteles, cargarOwnersHotels);
 
 
 const apiActivity = "http://localhost:5000/activitys";
@@ -454,6 +467,8 @@ actividadForm.addEventListener("submit", async (e) => {
     quota_available: document.getElementById("actividad_cupos").value,
     id_owner: document.getElementById("actividad_owner").value
   };
+
+  console.log("Datos de la actividad:", activityData);
 
   try {
     let res;
