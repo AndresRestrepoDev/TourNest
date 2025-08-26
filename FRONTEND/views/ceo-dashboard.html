@@ -11,11 +11,11 @@
     <!-- Barra lateral -->
     <aside class="sidebar">
       <h2>CEO Panel</h2>
-      <button data-section="hoteles">Hoteles</button>
-      <button data-section="habitaciones">Habitaciones</button>
-      <button data-section="actividades">Actividades</button>
-      <button data-section="usuarios">Usuarios</button>
-      <button data-section="propietarios">Propietarios</button>
+      <button data-section="hoteles" >Hoteles</button>
+      <button data-section="habitaciones" >Habitaciones</button>
+      <button data-section="actividades" >Actividades</button>
+      <button data-section="usuarios" style="display: none;" >Usuarios</button>
+      <button data-section="propietarios" style="display: none;" >Propietarios</button>
       <hr>
       <button id="logoutBtn" class="logout-btn">Cerrar sesión</button>
     </aside>
@@ -27,7 +27,9 @@
         <div class="center-container">
           <h2>Gestión de Hoteles</h2>
           <form id="hotelForm">
-            <input type="number" id="id_owner" placeholder="ID propietario" required>
+            <select id="id_owner_hotel" required>
+              <option value="">Seleccione un Propietario</option>
+            </select>
             <input type="text" id="name" placeholder="Nombre del hotel" required>
             <input type="text" id="city" placeholder="Ciudad" required>
             <input type="text" id="description" placeholder="Descripción" required>
@@ -40,34 +42,51 @@
       </div>
 
       <!-- HABITACIONES -->
-      <div id="section-habitaciones" class="section" style="display:none;">
-        <div class="center-container">
+     <div id="section-habitaciones" class="section" style="display:none;">
+       <div class="center-container">
           <h2>Gestión de Habitaciones</h2>
           <form id="habitacionForm">
-            <input type="number" id="hotel_id" placeholder="ID del Hotel" required>
-            <input type="text" id="numero_habitacion" placeholder="Número de Habitación" required>
-            <input type="number" id="capacidad" placeholder="Capacidad" required>
-            <input type="number" id="precio" placeholder="Precio" required>
-            <input type="text" id="estado" placeholder="Estado (disponible/ocupada)" required>
-            <button type="submit">Agregar Habitación</button>
+              <select id="hotel_id" required>
+                <option value="">Seleccione un hotel</option>
+              </select>
+              <input type="text" id="numero_habitacion" placeholder="Número de Habitación" required>
+              <input type="number" id="capacidad" placeholder="Capacidad" required>
+              <input type="number" id="precio" placeholder="Precio" required>
+              <input type="url" id="room_img_url" placeholder="URL de la Imagen">
+              <select id="estado" required>
+                <option value="available">Disponible</option>
+                <option value="occupied">Ocupada</option>
+              </select> 
+
+              <button type="submit">Agregar Habitación</button>
           </form>
         </div>
         <div id="room-list" class="room-container"></div>
-      </div>
+    </div>
+
 
       <!-- ACTIVIDADES -->
-      <div id="section-actividades" class="section" style="display:none;">
+     <div id="section-actividades" class="section" style="display:none;">
         <div class="center-container">
           <h2>Gestión de Actividades</h2>
           <form id="actividadForm">
             <input type="text" id="actividad_nombre" placeholder="Nombre de la Actividad" required>
-            <input type="text" id="actividad_descripcion" placeholder="Descripción" required>
-            <input type="number" id="actividad_precio" placeholder="Precio" required>
+            <input id="actividad_descripcion" placeholder="Descripción" required></input>
+            <input type="number" id="actividad_precio" placeholder="Precio (ej: 100.00)" step="0.01" required>
+            <input type="text" id="actividad_duracion" placeholder="Duración (ej: 2 horas)">
+            <input type="url" id="actividad_img" placeholder="URL de la Imagen">
+            <input type="text" id="actividad_lugar" placeholder="Lugar de la Actividad">
+            <input type="number" id="actividad_cupos" placeholder="Cupos Disponibles" required>
+            <select id="actividad_owner" required>
+              <option value="">Seleccione un Propietario</option>
+            </select>
+
             <button type="submit">Agregar Actividad</button>
           </form>
         </div>
         <div id="actividad-list" class="hotel-container"></div>
-      </div>
+     </div>
+
 
       <!-- USUARIOS -->
       <div id="section-usuarios" class="section" style="display:none;">

@@ -1,14 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owner Dashboard</title>
+  <link rel="stylesheet" href="./owner.css">
 </head>
 <body>
-    <h1>Vista OWNER</h1>
-    <button id="logoutBtn">Cerrar sesión</button>
+  <div class="dashboard-container">
+    <!-- Barra lateral -->
+    <aside class="sidebar">
+      <h2>Owner Panel</h2>
+      <p id="owner-name" style="text-align: center; font-weight: bold; font-style: italic;"></p>
 
-    <script src="./owner-dashboard.js"></script>
+      <button data-section="mis-hoteles">Mis Hoteles</button>
+      <button data-section="mis-habitaciones">Mis Habitaciones</button>
+      <button data-section="mis-actividades">Mis Actividades</button>
+      <button data-section="mis-reservas">Mis Reservas</button>
+      <hr>
+      <button id="logoutBtn" class="logout-btn">Cerrar sesión</button>
+    </aside>
+
+    <!-- Contenedor principal -->
+    <main class="main-content">
+      
+      <!-- SECCIÓN: MIS HOTELES -->
+      <div id="section-mis-hoteles" class="section">
+        <div class="center-container">
+          <h2>Gestión de mis hoteles</h2>
+          <form id="hotelForm">
+            <input type="text" id="hotel_nombre" placeholder="Nombre del hotel" required>
+            <input type="text" id="hotel_ciudad" placeholder="Ciudad" required>
+            <input type="text" id="hotel_descripcion" placeholder="Descripción" required>
+            <input type="number" id="hotel_rating" placeholder="Calificación" min="1" max="5" required>
+            <input type="text" id="hotel_img_url" placeholder="URL de imagen (opcional)">
+            <button type="submit">Agregar Hotel</button>
+          </form>
+        </div>
+        <div id="hotel-list" class="hotel-container"></div>
+      </div>
+
+      <!-- SECCIÓN: MIS HABITACIONES -->
+      <div id="section-mis-habitaciones" class="section" style="display:none;">
+        <div class="center-container">
+          <h2>Gestión de Mis Habitaciones</h2>
+          <form id="habitacionForm">
+              <select id="hotel_id" required>
+                <option value="">Seleccione uno de mis hoteles</option>
+              </select>
+              <input type="text" id="numero_habitacion" placeholder="Número de Habitación" required>
+              <input type="number" id="capacidad" placeholder="Capacidad" required>
+              <input type="number" id="precio" placeholder="Precio" required>
+              <input type="url" id="room_img_url" placeholder="URL de la Imagen">
+              <select id="estado" required>
+                <option value="available">Disponible</option>
+                <option value="occupied">Ocupada</option>
+              </select> 
+              <button type="submit">Agregar Habitación</button>
+          </form>
+        </div>
+        <div id="room-list" class="room-container"></div>
+      </div>
+
+      <!-- SECCIÓN: MIS ACTIVIDADES -->
+      <div id="section-mis-actividades" class="section" style="display:none;">
+        <div class="center-container">
+          <h2>Gestión de Mis Actividades</h2>
+          <form id="actividadForm">
+            <input type="text" id="actividad_nombre" placeholder="Nombre de la Actividad" required>
+            <input id="actividad_descripcion" placeholder="Descripción" required></input>
+            <input type="number" id="actividad_precio" placeholder="Precio (ej: 100.00)" step="0.01" required>
+            <input type="text" id="actividad_duracion" placeholder="Duración (ej: 2 horas)">
+            <input type="url" id="actividad_img" placeholder="URL de la Imagen">
+            <input type="text" id="actividad_lugar" placeholder="Lugar de la Actividad">
+            <input type="number" id="actividad_cupos" placeholder="Cupos Disponibles" required>
+            <button type="submit">Agregar Actividad</button>
+          </form>
+        </div>
+        <div id="actividad-list" class="actividad-container"></div>
+      </div>
+
+      <!-- SECCIÓN: MIS RESERVAS -->
+      <div id="section-mis-reservas" class="section" style="display:none;">
+        <div class="center-container">
+          <h2>Mis Reservas</h2>
+          <div id="reservas-list" class="reserva-container">
+            <!-- Aquí se cargará la lista de reservas -->
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="./owner-dashboard.js"></script>
 </body>
 </html>

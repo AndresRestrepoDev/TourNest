@@ -19,6 +19,8 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
       // Guardamos sesión en localStorage
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("role", data.role);
+      localStorage.setItem("id", data.id);
+      localStorage.setItem("name", data.name);
       
       // Redirección según rol
       if (data.role === "ceo") {
