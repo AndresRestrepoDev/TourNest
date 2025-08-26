@@ -1,0 +1,307 @@
+/* ====== RESET Y ESTILOS GENERALES ====== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  background-color: #f7f9fc;
+  color: #1f2937;
+}
+
+/* ====== LAYOUT PRINCIPAL ====== */
+/* Contenedor que envuelve sidebar + main */
+.dashboard-container {
+  display: flex;            /* importante: flex aquí (no en body) */
+  min-height: 100vh;
+}
+
+/* ====== SIDEBAR FIJA A LA IZQUIERDA ====== */
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background-color: #1e3a8a;
+  color: #fff;
+  padding: 22px;
+  position: fixed;         /* fija al lado izquierdo */
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+  z-index: 1000;
+}
+
+.sidebar h2 {
+  font-size: 1.25rem;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+/* Botones de la sidebar */
+.sidebar button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  color: #dbeafe;
+  border: none;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.98rem;
+  transition: background-color .18s, transform .08s;
+}
+
+.sidebar button:hover {
+  background-color: rgba(255,255,255,0.06);
+  transform: translateY(-1px);
+}
+
+.sidebar button.active {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+/* Logout separado al final */
+.sidebar hr {
+  margin: 12px 0;
+  border: 0;
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+}
+.logout-btn {
+  margin-top: 10px;
+  background: #ef4444;
+  color: #fff;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+.logout-btn:hover { background: #dc2626; }
+
+/* ====== MAIN CONTENT (con margen para sidebar) ====== */
+.main-content {
+  flex: 1;
+  margin-left: 260px;      /* espacio igual al ancho del sidebar */
+  padding: 28px;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+/* Small header opcional dentro del main */
+.main-content header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+/* ====== CENTER CONTAINER: centra formularios y contenido principal ====== */
+.center-container {
+  max-width: 1100px;
+  margin: 0 auto;            /* centra el bloque horizontalmente */
+  padding: 8px;
+  display: flex;
+  flex-direction: column;    /* uno debajo del otro */
+  gap: 18px;
+  justify-content: center;   /* centra el formulario dentro del container */
+  align-items: flex-start;
+}
+
+/* ====== FORMULARIO: ancho fijo y centrado dentro del center-container ====== */
+form {
+  width: 100%;
+  max-width: 720px;          /* ancho del formulario */
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(16,24,40,0.06);
+}
+
+form input,
+form textarea,
+form select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border: 1px solid #e6eef8;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: #fbfdff;
+}
+
+form button[type="submit"] {
+  display: inline-block;
+  background: #10b981;
+  color: #fff;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ====== LISTADOS / GRID ====== */
+.hotel-container,
+.room-container,
+.actividad-container,
+.reserva-container {
+  margin-top: 18px;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+/* Tarjeta */
+.card {
+  background: #fff;
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(2,6,23,0.06);
+}
+
+/* TABLAS para reservas */
+.table-container {
+  margin-top: 18px;
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.06);
+}
+th, td {
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 0.95rem;
+}
+th { background: #1e3a8a; color: #fff; }
+tr:nth-child(even) { background: #f6f9fe; }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 900px) {
+  .sidebar {
+    position: relative;      /* sidebar encima del flujo para pantallas pequeñas */
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .main-content {
+    margin-left: 0;
+    padding: 16px;
+  }
+  .center-container { padding: 6px; }
+  form { max-width: 100%; }
+}
+
+/* ====== UTILS ====== */
+.hidden { display: none !important; }
+
+/* para ocultar secciones no activas */
+.section {
+  display: none; /* Oculto por defecto */
+  width: 100%;
+  text-align: center;
+}
+
+.section h1 {
+  margin-bottom: 1rem;
+}
+
+/* estilos para tarjetas de hoteles */
+/* Contenedor de todas las cards */
+#hotels-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Card de hotel */
+.hotel-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.hotel-card:hover {
+  transform: scale(1.02);
+}
+
+/* Contenido */
+.hotel-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.hotel-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 2px solid #eee;
+}
+
+.hotel-info {
+  padding: 15px;
+}
+
+.hotel-info h3 {
+  margin-bottom: 8px;
+  font-size: 20px;
+  color: #333;
+}
+
+.hotel-info p {
+  margin: 5px 0;
+  color: #555;
+}
+
+/* Botones */
+.hotel-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.hotel-actions button {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.update-btn {
+  background: #3498db;
+  color: white;
+  margin-right: 8px;
+}
+
+.update-btn:hover {
+  background: #2980b9;
+}
+
+.delete-btn {
+  background: #e74c3c;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #c0392b;
+}
+
+
