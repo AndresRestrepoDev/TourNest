@@ -97,12 +97,15 @@ def create_user():
     data = request.json
     connection = get_db_connection()
     cursor = connection.cursor()
+    role = "user"  # rol por defecto
+
 
     sql = """
-        INSERT INTO users (name, email, password, document, date_birth, phone)
-        VALUES (%s, %s, %s, %s, %s, %s)
+        INSERT INTO users (name, email, password, document, date_birth, phone, role)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
     """
-    values = (data['name'], data['email'], data['password'], data['document'], data['date_birth'], data.get('phone'))
+    # Se agrega la variable 'role' a la tupla de valores
+    values = (data['name'], data['email'], data['password'], data['document'], data['date_birth'], data.get('phone'), role)
 
     cursor.execute(sql, values)
     connection.commit()
@@ -500,6 +503,20 @@ def get_activities_by_owner(id_owner):
         return jsonify(activities)
     except Exception as e:
         print("Error:", e)
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/rooms/hotel/<int:hotel_id>", methods=["GET"])
+def get_rooms_by_hotel(hotel_id):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM rooms WHERE id_hotel = %s", (hotel_id,))
+        rooms = cursor.fetchall()
+        cursor.close()
+        connection.close()
+        return jsonify(rooms)
+    except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 
