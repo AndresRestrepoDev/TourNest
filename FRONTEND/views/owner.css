@@ -304,4 +304,183 @@ tr:nth-child(even) { background: #f6f9fe; }
   background: #c0392b;
 }
 
+/* card rooms */
+/* Contenedor de habitaciones */
+#habitacion-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
 
+/* Card de habitación */
+.room-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.room-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.room-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+.room-card h4 {
+  margin: 12px;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.room-card p {
+  margin: 4px 12px;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.room-card button {
+  margin: 10px 12px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.room-card button.update-room-btn {
+  background-color: #4caf50;
+  color: #fff;
+  margin-right: 8px;
+}
+
+.room-card button.update-room-btn:hover {
+  background-color: #45a049;
+}
+
+.room-card button.delete-room-btn {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.room-card button.delete-room-btn:hover {
+  background-color: #e53935;
+}
+
+/* card actividades */
+
+/* Contenedor de todas las cards */
+#actividad-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Card individual */
+.actividad-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 300px;
+}
+
+/* Efecto hover */
+.actividad-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Imagen de la actividad */
+.actividad-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+/* Título de la actividad */
+.actividad-card h4 {
+  margin: 12px;
+  font-size: 1.2rem;
+  color: #333;
+  line-height: 1.3;
+}
+
+/* Texto de detalles */
+.actividad-card p {
+  margin: 4px 12px;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Contenedor de botones */
+.actividad-card .btn-group {
+  margin: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+/* Botones */
+.actividad-card button {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+/* Botón editar */
+.actividad-card button.update-actividad-btn {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.actividad-card button.update-actividad-btn:hover {
+  background-color: #45a049;
+}
+
+/* Botón eliminar */
+.actividad-card button.delete-actividad-btn {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.actividad-card button.delete-actividad-btn:hover {
+  background-color: #e53935;
+}
+
+.reserves-placeholder {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #f9f9f9;
+  border: 2px dashed #ccc;
+  border-radius: 12px;
+  color: #555;
+  font-family: Arial, sans-serif;
+}
+
+.reserves-placeholder h3 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.reserves-placeholder p {
+  font-size: 1rem;
+}
