@@ -484,8 +484,23 @@ def get_hotels_by_owner(owner_id):
     connection.close()
     return jsonify(hotels)
 
+# ruta para traer actividades por owner
+@app.route('/activitys/owner/<int:id_owner>', methods=['GET'])
+def get_activities_by_owner(id_owner):
+    try:
+        connection = get_db_connection()  # usa la función que te funciona para hoteles
+        cursor = connection.cursor(dictionary=True)
 
+        sql = "SELECT * FROM activitys WHERE id_owner = %s"
+        cursor.execute(sql, (id_owner,))
+        activities = cursor.fetchall()
 
+        cursor.close()
+        connection.close()
+        return jsonify(activities)
+    except Exception as e:
+        print("Error:", e)
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == '__main__': # Ejecuta la aplicación Flask
