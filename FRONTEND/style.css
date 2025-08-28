@@ -318,4 +318,57 @@ body {
   margin-top: 3rem;
 }
 
+/* ===== estilos para el modal ===== */
+.modal {
+  display: none; /* Oculto por defecto */
+  position: fixed; /* Permanece en su lugar */
+  z-index: 1000; /* Asegura que esté por encima de todo */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Habilita el desplazamiento si es necesario */
+  background-color: rgba(0,0,0,0.6); /* Fondo semi-transparente */
+  animation: fadeIn 0.5s;
+}
 
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto; /* 10% arriba y centrado */
+  padding: 30px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  position: relative;
+  text-align: center;
+}
+
+.modal-content p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.close {
+  color: #aaa;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}

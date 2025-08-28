@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TourNest - Inicio</title>
   <link rel="stylesheet" href="./style.css">
+
+  <!-- para mejorar la carga de las imágenes del slider -->
+  <link rel="preload" href="https://picsum.photos/1600/900?beach" as="image">
+  <link rel="preload" href="https://picsum.photos/1600/900?mountain" as="image">
+  <link rel="preload" href="https://picsum.photos/1600/900?city" as="image">
 </head>
 <body>
 
@@ -41,27 +46,27 @@
     <h3 class="section-title">Habitaciones Destacadas</h3>
     <div class="cards">
       <div class="card">
-        <img src="https://picsum.photos/400/250?hotel" alt="Habitación">
+        <img src="https://www.glamping-colombia.com/wp-content/uploads/2025/04/el-alpino-glamping-bogota-guatavita.webp" alt="Habitación">
         <div class="card-content">
           <h4>Suite Familiar</h4>
           <p>$120 / noche</p>
-          <a href="#">Ver más</a>
+          <a href="#" class="Modal">Ver más</a>
         </div>
       </div>
       <div class="card">
-        <img src="https://picsum.photos/400/250?room" alt="Habitación">
+        <img src="https://domusglamping.com/wp-content/uploads/2025/05/lk.jpg" alt="Domo">
         <div class="card-content">
-          <h4>Habitación Deluxe</h4>
+          <h4>Domo glamping</h4>
           <p>$95 / noche</p>
-          <a href="#">Ver más</a>
+          <a href="#" class="Modal">Ver más</a>
         </div>
       </div>
       <div class="card">
-        <img src="https://picsum.photos/400/250?suite" alt="Habitación">
+        <img src="https://image-tc.galaxy.tf/wijpeg-72hvyufwfjulhdio7d0o0phwg/real-dann-carlton-medellin-1_wide.jpg?crop=0%2C100%2C1920%2C1080" alt="Habitación">
         <div class="card-content">
           <h4>Suite Ejecutiva</h4>
           <p>$150 / noche</p>
-          <a href="#">Ver más</a>
+          <a href="#" class="Modal">Ver más</a>
         </div>
       </div>
     </div>
@@ -72,28 +77,35 @@
     <h3 class="section-title">Paquetes Turísticos</h3>
     <div class="cards">
       <div class="card">
-        <img src="https://picsum.photos/400/250?beach" alt="Tour playa">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTfDvsy4f1_RFRRGOuVzfkCu1dpsZxmMBQNg&s" alt="Tour playa">
         <div class="card-content">
           <h4>Tour Caribe</h4>
           <p>⭐⭐⭐⭐☆</p>
-          <a href="#">Más detalles</a>
+          <a href="#" class="Modal">Más detalles</a>
         </div>
       </div>
       <div class="card">
-        <img src="https://picsum.photos/400/250?mountain" alt="Tour montaña">
+        <img src="https://www.arcos.cl/wp-content/uploads/2020/08/turismo-montana-1024x682.jpg" alt="Tour montaña">
         <div class="card-content">
           <h4>Aventura en la Montaña</h4>
           <p>⭐⭐⭐⭐⭐</p>
-          <a href="#">Más detalles</a>
+          <a href="#" class="Modal">Más detalles</a>
         </div>
       </div>
       <div class="card">
-        <img src="https://picsum.photos/400/250?city" alt="Tour ciudad">
+        <img src="https://www.exoticca.com/_next/image?url=https%3A%2F%2Fuploads.exoticca.com%2Fglobal%2Fdestination%2Fpoi%2Fcomuna-13.png&w=3840&q=75" alt="Tour ciudad">
         <div class="card-content">
           <h4>Tour Medellín</h4>
           <p>⭐⭐⭐⭐☆</p>
-          <a href="#">Más detalles</a>
+          <a href="#" class="Modal">Más detalles</a>
         </div>
+      </div>
+    </div>
+
+    <div id="modal-registro" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Para ver más información debes registrarte.</p>
       </div>
     </div>
   </section>
@@ -159,6 +171,36 @@
 
     // autoplay
     interval = setInterval(nextSlide, 5000);
+
+    // Modal
+    const modal = document.getElementById("modal-registro");
+
+    // Obtener la colección de todos los enlaces con la clase 'modal'
+    const enlaces = document.querySelectorAll(".Modal");
+
+    // Obtener el elemento que cierra el modal
+    const span = document.getElementsByClassName("close")[0];
+
+    // Recorrer la colección de enlaces y agregar un evento 'onclick' a cada uno
+    enlaces.forEach(function(enlace) {
+      enlace.onclick = function(event) {
+        // Previene el comportamiento por defecto del enlace (evita que recargue la página)
+        event.preventDefault();
+        modal.style.display = "block";
+      }
+    });
+
+    // Cuando el usuario hace clic en <span> (x), cerrar el modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // Cuando el usuario hace clic fuera del modal, cerrarlo
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
   </script>
 
 </body>
