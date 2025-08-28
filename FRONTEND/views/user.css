@@ -222,3 +222,84 @@ body, html {
 #back-to-hotels:active {
   transform: translateY(0);
 }
+
+/* ===== estilos para el modal ===== */
+.modal {
+  display: none; /* Oculto por defecto */
+  position: fixed; /* Permanece en su lugar */
+  z-index: 1000; /* Asegura que esté por encima de todo */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Habilita el desplazamiento si es necesario */
+  background-color: rgba(0,0,0,0.6); /* Fondo semi-transparente */
+  animation: fadeIn 0.5s;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto; /* 10% arriba y centrado */
+  padding: 30px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  position: relative;
+  text-align: center;
+}
+
+.modal-content p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.close {
+  color: #aaa;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+/* estilos al boton de reservar en .actividad-card */
+
+.Modal-Reservas {
+  display: inline-block; /* Convierte el enlace en un bloque para aplicar padding y margen */
+  background-color: #3f51b5; /* Color de fondo azul */
+  color: #fff; /* Color de texto blanco */
+  padding: 10px 20px; /* Espaciado interno para hacerlo más grande */
+  text-decoration: none; /* Elimina el subrayado predeterminado */
+  border-radius: 5px; /* Bordes ligeramente redondeados */
+  font-weight: bold; /* Texto en negrita */
+  transition: background-color 0.3s ease; /* Transición suave para el efecto hover */
+  border: none; /* Asegura que no tenga borde si se usa como botón */
+  cursor: pointer; /* Cambia el cursor para indicar que es clickeable */
+  text-align: center; /* Centra el texto */
+}
+
+/* Efecto al pasar el mouse por encima */
+.Modal-Reservas:hover {
+  background-color: #303f9f; /* Un tono de azul más oscuro */
+}
+
+/* Efecto al hacer clic en el botón */
+.Modal-Reservas:active {
+  background-color: #1a237e; /* Un tono de azul aún más oscuro */
+}

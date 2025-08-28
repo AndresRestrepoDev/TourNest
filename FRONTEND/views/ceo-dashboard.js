@@ -98,6 +98,7 @@ container.addEventListener("click", async (e) => {
         if (res.ok) {
           alert("Hotel eliminado ✅");
           await loadHotels();
+          await cargarHoteles(); // recargar select de hoteles
         } else {
           alert("Error al eliminar hotel");
         }
@@ -127,6 +128,11 @@ container.addEventListener("click", (e) => {
     // Marcar formulario en modo edición
     hotelForm.dataset.editId = hotelId;
     hotelForm.querySelector("button[type='submit']").textContent = "Actualizar Hotel";
+
+    window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+    });
   }
 });
 
@@ -168,6 +174,7 @@ hotelForm.addEventListener("submit", async (e) => {
       hotelForm.querySelector("button[type='submit']").textContent = "Agregar Hotel";
       hotelForm.reset();
       await loadHotels(); // recargar lista
+      await cargarHoteles(); // recargar select de hoteles
     } else {
       alert(editId ? "Error al actualizar hotel" : "Error al agregar hotel");
     }
@@ -284,6 +291,11 @@ roomContainer.addEventListener("click", (e) => {
     // Marcar formulario en modo edición
     habitacionForm.dataset.editId = roomId;
     habitacionForm.querySelector("button[type='submit']").textContent = "Actualizar Habitación";
+
+    window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+    });
   }
 });
 
@@ -436,7 +448,7 @@ activityContainer.addEventListener("click", (e) => {
     if (!activity) return alert("Actividad no encontrada");
 
     // Llenar el formulario con los datos
-    document.getElementById("actividad_nombre").value = activity.name_activity;
+    document.getElementById("actividad_nombre").value = activity.name;
     document.getElementById("actividad_descripcion").value = activity.description;
     document.getElementById("actividad_precio").value = activity.price;
     document.getElementById("actividad_img").value = activity.img_url;
@@ -448,6 +460,11 @@ activityContainer.addEventListener("click", (e) => {
     // Marcar formulario en modo edición
     actividadForm.dataset.editId = activityId;
     actividadForm.querySelector("button[type='submit']").textContent = "Actualizar Actividad";
+
+    window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+    });
   }
 });
 
