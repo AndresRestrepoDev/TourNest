@@ -99,10 +99,16 @@ container.addEventListener("click", (e) => {
         // Actualizar array y renderizar
         hotels = hotels.filter(h => h.id_hotel !== idHotel);
         loadHotels();
+        cargarHoteles(); // actualizar select
         alert("Hotel eliminado con éxito");
       })
       .catch(err => console.error(err));
   }
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+    });
 });
 
 // Manejo de formulario (Agregar / Editar)
@@ -136,6 +142,7 @@ hotelForm.addEventListener("submit", async (e) => {
       delete hotelForm.dataset.editId;
       hotelForm.querySelector("button[type='submit']").textContent = "Agregar Hotel";
       loadHotels(); // recargar lista sin duplicados
+      cargarHoteles(); // actualizar select
     } else {
       alert("Error al guardar hotel");
     }
@@ -224,12 +231,12 @@ async function loadHabitaciones() {
       card.classList.add("room-card");
       card.dataset.id = room.id_room; // suponiendo que tu id de habitación es id_room
       card.innerHTML = `
+        <img src="${room.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="Habitación">
         <h4>Hotel: ${misHoteles.find(h => h.id_hotel === room.id_hotel)?.name || "Desconocido"}</h4>
         <p>Número: ${room.number_room}</p>
         <p>Capacidad: ${room.capacity}</p>
         <p>Precio: $${room.price}</p>
         <p>Estado: ${room.state}</p>
-        <img src="${room.room_img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="Habitación">
         <button class="update-room-btn" data-id="${room.id_room}">Editar</button>
         <button class="delete-room-btn" data-id="${room.id_room}">Eliminar</button>
       `;
@@ -283,6 +290,11 @@ habitacionForm.addEventListener("submit", async (e) => {
   } catch (err) {
     console.error(err);
   }
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+    });
 });
 
 // Editar / Eliminar habitación desde las cards
@@ -311,10 +323,17 @@ habitacionContainer.addEventListener("click", (e) => {
         if (!res.ok) throw new Error("Error eliminando habitación");
         habitaciones = habitaciones.filter(r => r.id_room !== idRoom);
         loadHabitaciones();
+        cargarHoteles();
         alert("Habitación eliminada ✅");
       })
       .catch(err => console.error(err));
+    cargarHoteles();
   }
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+    });
 });
 
 // CRUD para gestionar actividades de los propietarios
@@ -397,6 +416,11 @@ actividadForm.addEventListener("submit", async (e) => {
   } catch (err) {
     console.error(err);
   }
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+    });
 });
 
 // Editar / Eliminar desde las cards
@@ -430,6 +454,11 @@ actividadContainer.addEventListener("click", (e) => {
       })
       .catch(err => console.error(err));
   }
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+    });
 });
 
 // Inicializar

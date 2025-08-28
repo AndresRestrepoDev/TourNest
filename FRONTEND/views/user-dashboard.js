@@ -74,6 +74,33 @@ async function loadUserHotels() {
   }
 }
 
+// 1. Obtén las referencias al nuevo modal
+const modalProximamente = document.getElementById("modal-proximamente");
+const closeBtn = document.querySelector("#modal-proximamente .close");
+
+// 2. Escucha los clics en el contenedor padre de las actividades
+document.getElementById("user-room-list").addEventListener("click", (event) => {
+  // 3. Verifica si el clic fue en un elemento con la clase .Modal-Reservas
+  if (event.target.classList.contains("Modal-Reservas")) {
+    event.preventDefault(); // Evita que el enlace recargue la página
+    modalProximamente.style.display = "block"; // Muestra el modal
+  }
+});
+
+// 4. Lógica para cerrar el modal
+if (closeBtn) {
+  closeBtn.addEventListener('click', () => {
+    modalProximamente.style.display = "none";
+  });
+}
+
+// 5. Cerrar el modal al hacer clic fuera del contenido
+window.addEventListener('click', (event) => {
+  if (event.target === modalProximamente) {
+    modalProximamente.style.display = "none";
+  }
+});
+
 // Cargar habitaciones según hotel
 async function loadRooms(hotelId) {
   userRoomList.innerHTML = "<p>Cargando habitaciones...</p>";
@@ -87,11 +114,12 @@ async function loadRooms(hotelId) {
       const card = document.createElement("div");
       card.classList.add("room-card");
       card.innerHTML = `
-        <img src="${room.room_img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="Habitación">
+        <img src="${room.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="Habitación">
         <h4>Habitación ${room.number_room}</h4>
         <p>Capacidad: ${room.capacity}</p>
         <p>Precio: $${room.price}</p>
         <p>Estado: ${room.state}</p>
+        <a href="#" class="Modal-Reservas">Reservar</a>
       `;
       userRoomList.appendChild(card);
     });
@@ -117,6 +145,33 @@ document.getElementById("back-to-hotels").addEventListener("click", () => {
   showSection("hoteles-disponibles");
 });
 
+// 1. Obtén las referencias al nuevo modal
+// const modalProximamente = document.getElementById("modal-proximamente");
+// const closeBtn = document.querySelector("#modal-proximamente .close");
+
+// 2. Escucha los clics en el contenedor padre de las actividades
+document.getElementById("actividad-list").addEventListener("click", (event) => {
+  // 3. Verifica si el clic fue en un elemento con la clase .Modal-Reservas
+  if (event.target.classList.contains("Modal-Reservas")) {
+    event.preventDefault(); // Evita que el enlace recargue la página
+    modalProximamente.style.display = "block"; // Muestra el modal
+  }
+});
+
+// 4. Lógica para cerrar el modal
+if (closeBtn) {
+  closeBtn.addEventListener('click', () => {
+    modalProximamente.style.display = "none";
+  });
+}
+
+// 5. Cerrar el modal al hacer clic fuera del contenido
+window.addEventListener('click', (event) => {
+  if (event.target === modalProximamente) {
+    modalProximamente.style.display = "none";
+  }
+});
+
 // Cargar actividades
 async function loadUserActivities() {
   actividadList.innerHTML = "<p>Cargando actividades...</p>";
@@ -137,6 +192,7 @@ async function loadUserActivities() {
         <p><strong>Duración:</strong> ${act.duration || "No especificada"}</p>
         <p><strong>Lugar:</strong> ${act.place || "No especificado"}</p>
         <p><strong>Cupos disponibles:</strong> ${act.quota_available}</p>
+        <a href="#" class="Modal-Reservas">Reservar</a>
       `;
       actividadList.appendChild(card);
     });
@@ -145,3 +201,5 @@ async function loadUserActivities() {
     actividadList.innerHTML = "<p>Error cargando actividades</p>";
   }
 }
+
+
