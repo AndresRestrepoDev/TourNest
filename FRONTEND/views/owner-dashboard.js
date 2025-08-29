@@ -232,7 +232,7 @@ async function loadHabitaciones() {
       card.dataset.id = room.id_room; // suponiendo que tu id de habitación es id_room
       card.innerHTML = `
         <img src="${room.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="Habitación">
-        <h4>Hotel: ${misHoteles.find(h => h.id_hotel === room.id_hotel)?.name || "Desconocido"}</h4>
+        <h3>Hotel: ${misHoteles.find(h => h.id_hotel === room.id_hotel)?.name || "Desconocido"}</h3>
         <p>Número: ${room.number_room}</p>
         <p>Capacidad: ${room.capacity}</p>
         <p>Precio: $${room.price}</p>
@@ -358,13 +358,13 @@ async function loadActividades() {
       card.dataset.id = act.id_activity;
 
       card.innerHTML = `
-        <h4>${act.name}</h4>
+        <img src="${act.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="${act.name}">
+        <h3>${act.name}</h3>
         <p>${act.description}</p>
         <p><strong>Precio:</strong> $${act.price}</p>
         <p><strong>Duración:</strong> ${act.duration || "No especificada"}</p>
         <p><strong>Lugar:</strong> ${act.place || "No especificado"}</p>
         <p><strong>Cupos disponibles:</strong> ${act.quota_available}</p>
-        <img src="${act.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="${act.name}">
         <button class="update-actividad-btn" data-id="${act.id_activity}">Editar</button>
         <button class="delete-actividad-btn" data-id="${act.id_activity}">Eliminar</button>
       `;

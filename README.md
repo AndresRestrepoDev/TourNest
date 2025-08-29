@@ -82,9 +82,19 @@ TourNest/
 
 2. **Create a virtual environment inside the BACKEND folder**
 
-    cd TourNest/BACKEND
+    cd BACKEND
     python3 -m venv venv
-    source venv/bin/activate
+
+    > **Note:**  
+    > To activate the virtual environment:
+    > - **Linux/macOS:**  
+    >   ```
+    >   source venv/bin/activate
+    >   ```
+    > - **Windows:**  
+    >   ```
+    >   .\venv\Scripts\activate
+    >   ```
 
 3. **Install dependencies**
 
@@ -96,7 +106,7 @@ Create a .env file inside the BACKEND folder with your database credentials:
 
     DB_HOST=localhost
     DB_USER=root
-    DB_PASSWORD=your_password
+    DB_PASSWORD=your_password  -> **Important** 
     DB_NAME=TourNest
 
 5. **Run the server**
