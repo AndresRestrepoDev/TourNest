@@ -1,39 +1,37 @@
-import mysql.connector  # Para la conexión a MySQL
-from flask import Flask, request, jsonify # Para crear la API y manejar respuestas JSON
-import os  # Para manejar variables de entorno
-from dotenv import load_dotenv # Para cargar variables de entorno desde un archivo .env
-from flask_cors import CORS # Importar CORS
+import mysql.connector  # For MySQL connection
+from flask import Flask, request, jsonify # For API creation and JSON responses
+import os  # For environment variables
+from dotenv import load_dotenv # To load environment variables from .env file
+from flask_cors import CORS # Import CORS
 
-
-# Carga las variables de entorno del archivo .env
+# Load environment variables from .env file
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app) # Habilitar CORS
+CORS(app) # Enable CORS
 
-# Configuración de la conexión a la base de datos
+# Database connection configuration
 db_config = {
     'host': os.getenv("DB_HOST"),
     'user': os.getenv("DB_USER"),
     'password': os.getenv("DB_PASSWORD"),
     'database': os.getenv("DB_NAME"),
-    'autocommit': True   # 🔑 Muy importante para evitar locks
+    'autocommit': True   # 🔑 Very important to avoid locks
 }
 
-def get_db_connection():  # Función para obtener una conexión a la base de datos
+def get_db_connection():  # Function to get a database connection
     try:
         connection = mysql.connector.connect(**db_config)
         return connection
     except mysql.connector.Error as err:
-        print(f"Error de conexión a la base de datos: {err}")
-        return None # Retorna None si hay un error de conexión
+        print(f"Database connection error: {err}")
+        return None # Returns None if there is a connection error
 
-@app.route('/health') # Ruta para verificar el estado de la API
+@app.route('/health') # Route to check API status
 def health():
-    return jsonify({"status": "ok"}), 200  # Respuesta JSON indicando que la API está funcionando
+    return jsonify({"status": "ok"}), 200  # JSON response indicating API is working
 
-
-############## Ruta para validad inicio de sesión ##############
+############## Route for login validation ##############
 @app.route("/login", methods=["POST"])
 def login():
     data = request.json
@@ -43,42 +41,39 @@ def login():
     connection = get_db_connection()
     cursor = connection.cursor(dictionary=True)
 
-    # Validar CEO
+    # Validate CEO
     sql_ceo = "SELECT * FROM ceo WHERE email=%s AND password=%s"
     cursor.execute(sql_ceo, (email, password))
     ceo = cursor.fetchone()
     if ceo:
         cursor.close()
         connection.close()
-        return jsonify({"role": "ceo", "id": ceo["id_ceo"], "message": "Bienvenido CEO"}), 200
+        return jsonify({"role": "ceo", "id": ceo["id_ceo"], "message": "Welcome CEO"}), 200
 
-    # Validar Owner
+    # Validate Owner
     sql_owner = "SELECT * FROM owners WHERE email=%s AND password=%s"
     cursor.execute(sql_owner, (email, password))
     owner = cursor.fetchone()
     if owner:
         cursor.close()
         connection.close()
-        return jsonify({"role": "owner", "id": owner["id_owner"], "name": owner["name"], "message": "Bienvenido Propietario"}), 200
+        return jsonify({"role": "owner", "id": owner["id_owner"], "name": owner["name"], "message": "Welcome Owner"}), 200
 
-    # Validar User
+    # Validate User
     sql_user = "SELECT * FROM users WHERE email=%s AND password=%s"
     cursor.execute(sql_user, (email, password))
-    user = cursor.fetchone()
-    if user:
+    user = cursor.fetchone()        
+    if user:                            
         cursor.close()
         connection.close()
-        return jsonify({"role": "user", "id": user["id_user"], "name": user["name"], "message": "Bienvenido Usuario"}), 200
+        return jsonify({"role": "user", "id": user["id_user"], "name": user["name"], "message": "Welcome User"}), 200
 
-    # Si no encontró nada
+    # If nothing found
     cursor.close()
     connection.close()
-    return jsonify({"message": "Correo o contraseña incorrectos"}), 401
+    return jsonify({"message": "Incorrect email or password"}), 401
 
-
-
-
-#CRUD para la tabla 'users'
+# CRUD for 'users' table
 
 @app.route('/users', methods=['GET'])
 def get_users():
@@ -97,14 +92,13 @@ def create_user():
     data = request.json
     connection = get_db_connection()
     cursor = connection.cursor()
-    role = "user"  # rol por defecto
-
+    role = "user"  # default role
 
     sql = """
         INSERT INTO users (name, email, password, document, date_birth, phone, role)
         VALUES (%s, %s, %s, %s, %s, %s, %s)
     """
-    # Se agrega la variable 'role' a la tupla de valores
+    # Add 'role' variable to the tuple of values
     values = (data['name'], data['email'], data['password'], data['document'], data['date_birth'], data.get('phone'), role)
 
     cursor.execute(sql, values)
@@ -149,7 +143,7 @@ def delete_user(id_user):
 
     return jsonify({"message": "User deleted"})
 
-#CRUD para la tabla 'owners'
+# CRUD for 'owners' table
 
 @app.route('/owners', methods=['POST'])
 def create_owner():
@@ -174,7 +168,7 @@ def create_owner():
         cursor.execute(query, values)
         connection.commit()
 
-        return jsonify({"message": "Owner creado exitosamente", "id_owner": cursor.lastrowid}), 201
+        return jsonify({"message": "Owner created successfully", "id_owner": cursor.lastrowid}), 201
 
     except mysql.connector.Error as err:
         return jsonify({"error": str(err)}), 500
@@ -221,9 +215,9 @@ def update_owner(id_owner):
         connection.commit()
 
         if cursor.rowcount == 0:
-            return jsonify({"message": "Owner no encontrado"}), 404
+            return jsonify({"message": "Owner not found"}), 404
 
-        return jsonify({"message": "Owner actualizado exitosamente"}), 200
+        return jsonify({"message": "Owner updated successfully"}), 200
 
     except mysql.connector.Error as err:
         return jsonify({"error": str(err)}), 500
@@ -241,9 +235,9 @@ def delete_owner(id_owner):
         connection.commit()
 
         if cursor.rowcount == 0:
-            return jsonify({"message": "Owner no encontrado"}), 404
+            return jsonify({"message": "Owner not found"}), 404
 
-        return jsonify({"message": "Owner eliminado exitosamente"}), 200
+        return jsonify({"message": "Owner deleted successfully"}), 200
 
     except mysql.connector.Error as err:
         return jsonify({"error": str(err)}), 500
@@ -251,7 +245,7 @@ def delete_owner(id_owner):
         cursor.close()
         connection.close()
 
-#CRUD para la tabla hotels
+# CRUD for 'hotels' table
 
 @app.route('/hotels', methods=['POST'])
 def create_hotel():
@@ -275,8 +269,7 @@ def create_hotel():
     new_id = cursor.lastrowid
     cursor.close()
     connection.close()
-    return jsonify({"message": "Hotel creado exitosamente"}), 201
-
+    return jsonify({"message": "Hotel created successfully"}), 201
 
 @app.route('/hotels', methods=['GET'])
 def get_hotels():
@@ -326,8 +319,7 @@ def delete_hotel(id_hotel):
     connection.close()
     return jsonify({'message': 'Hotel deleted (rooms also deleted by cascade)'})
 
-
-#CRUD para la tabla 'rooms'
+# CRUD for 'rooms' table
 
 @app.route('/rooms', methods=['GET'])
 def get_rooms():
@@ -417,7 +409,7 @@ def delete_room(id_room):
 
     return jsonify({"message": f"Room {id_room} deleted"})
 
-#CRUD para la tabla 'activitys'
+# CRUD for 'activitys' table
 
 @app.route('/activitys', methods=['POST'])
 def create_activity():
@@ -433,7 +425,7 @@ def create_activity():
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Actividad creada exitosamente"}), 201
+    return jsonify({"message": "Activity created successfully"}), 201
 
 @app.route('/activitys', methods=['GET'])
 def get_activitys():
@@ -460,7 +452,7 @@ def update_activity(id_activity):
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Actividad actualizada exitosamente"})
+    return jsonify({"message": "Activity updated successfully"})
 
 @app.route('/activitys/<int:id_activity>', methods=['DELETE'])
 def delete_activity(id_activity):
@@ -470,10 +462,9 @@ def delete_activity(id_activity):
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Actividad eliminada exitosamente"})
+    return jsonify({"message": "Activity deleted successfully"})
 
-
-# ruta para traer hoteles por owner
+# Route to get hotels by owner
 @app.route("/hotels/owner/<int:owner_id>", methods=["GET"])
 def get_hotels_by_owner(owner_id):
     connection = get_db_connection()
@@ -487,11 +478,11 @@ def get_hotels_by_owner(owner_id):
     connection.close()
     return jsonify(hotels)
 
-# ruta para traer actividades por owner
+# Route to get activities by owner
 @app.route('/activitys/owner/<int:id_owner>', methods=['GET'])
 def get_activities_by_owner(id_owner):
     try:
-        connection = get_db_connection()  # usa la función que te funciona para hoteles
+        connection = get_db_connection()  # uses the function that works for hotels
         cursor = connection.cursor(dictionary=True)
 
         sql = "SELECT * FROM activitys WHERE id_owner = %s"
@@ -504,7 +495,6 @@ def get_activities_by_owner(id_owner):
     except Exception as e:
         print("Error:", e)
         return jsonify({"error": str(e)}), 500
-
 
 @app.route("/rooms/hotel/<int:hotel_id>", methods=["GET"])
 def get_rooms_by_hotel(hotel_id):
@@ -519,6 +509,5 @@ def get_rooms_by_hotel(hotel_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
-if __name__ == '__main__': # Ejecuta la aplicación Flask
-    app.run(debug=True) # Modo debug para desarrollo
+if __name__ == '__main__': # Run the Flask application
+    app.run(debug=True) # Debug

@@ -20,13 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await res.json();
 
         if (res.ok) {
-          // Guardamos sesión en localStorage
+          // Save session in localStorage
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("role", data.role);
           localStorage.setItem("id", data.id);
           localStorage.setItem("name", data.name);
 
-          // Redirección según rol
+          // Redirect according to role
           if (data.role === "ceo") {
             window.location.href = "../views/ceo-dashboard.html";
           } else if (data.role === "owner") {
@@ -35,24 +35,24 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "../views/user-dashboard.html";
           }
         } else {
-          alert(data.message || "Credenciales incorrectas");
+          alert(data.message || "Incorrect credentials");
         }
       } catch (err) {
         console.error(err);
-        alert("Error en el servidor, intenta de nuevo");
+        alert("Server error, please try again");
       }
     });
   }
 
   // --------------------
-  // REGISTRO
+  // REGISTER
   // --------------------
   const registerForm = document.getElementById("registerForm");
   if (registerForm) {
     registerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      // Capturar datos del formulario
+      // Capture form data
       const name = document.getElementById("name").value.trim();
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
@@ -61,9 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const date_birth = document.getElementById("date_birth").value;
       const phone = document.getElementById("phone").value.trim();
 
-      // Validación de contraseñas
+      // Password validation
       if (password !== confirmPassword) {
-        alert("Las contraseñas no coinciden");
+        alert("Passwords do not match");
         return;
       }
 
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document: documentNumber,
         date_birth,
         phone,
-        role: "user" // Rol por defecto
+        role: "user" // Default role
       };
 
       try {
@@ -86,10 +86,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!res.ok) {
           const errorData = await res.json();
-          throw new Error(errorData.message || "Error al registrar usuario");
+          throw new Error(errorData.message || "Error registering user");
         }
 
-        alert("Usuario registrado correctamente");
+        alert("User registered successfully");
         registerForm.reset();
         window.location.href = "./login.html";
       } catch (err) {
