@@ -1,31 +1,33 @@
+// API endpoint for hotels
 const apiHotel = "http://localhost:5000/hotels";
 
+// When the DOM is loaded, check login and load data
 document.addEventListener("DOMContentLoaded", async () => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const role = localStorage.getItem("role");
-  const ownerId = localStorage.getItem("ownerId"); // recuperas el id
+  const ownerId = localStorage.getItem("ownerId"); // Retrieve owner ID
 
   if (isLoggedIn !== "true" || role !== "ceo") {
-    alert("Acceso no autorizado");
+    alert("Unauthorized access");
     window.location.href = "../index.html";
     return;
   }
 
-  console.log("El ID del propietario logueado es:", ownerId);
+  console.log("Logged owner ID:", ownerId);
 
-  // Aquí podrías usar el ownerId para traer SOLO sus hoteles
+  // Here you could use ownerId to fetch ONLY their hotels
   await loadHotels(ownerId);
   await loadRooms(ownerId);
   await loadActivities(ownerId);
 });
 
-
-// Botón logout
+// Logout button event
 document.getElementById("logoutBtn").addEventListener("click", () => {
   localStorage.clear();
   window.location.href = "../index.html";
 });
 
+// Load owners for hotel select
 async function cargarOwnersHotels() {
   try {
     const response = await fetch("http://localhost:5000/owners"); 
@@ -33,10 +35,10 @@ async function cargarOwnersHotels() {
 
     const select = document.getElementById("id_owner_hotel");
 
-    // resetear opciones
-    select.innerHTML = '<option value="">Seleccione un Propietario</option>';
+    // Reset options
+    select.innerHTML = '<option value="">Select an Owner</option>';
 
-    // agregar cada owner
+    // Add each owner as option
     owners.forEach(owner => {
       const option = document.createElement("option");
       option.value = owner.id_owner;
@@ -45,16 +47,15 @@ async function cargarOwnersHotels() {
     });
 
   } catch (error) {
-    console.error("Error cargando owners:", error);
+    console.error("Error loading owners:", error);
   }
 }
 
 document.addEventListener("DOMContentLoaded", cargarOwnersHotels);
 
+let hoteles = []; // Global variable to store hotels
 
-let hoteles = []; // variable global para almacenar los hoteles
-
-// Función para cargar hoteles
+// Function to load hotels
 async function loadHotels() {
   try {
     const res = await fetch(apiHotel);
@@ -68,39 +69,39 @@ async function loadHotels() {
       card.classList.add("hotel-card");
 
       card.innerHTML = `
-        <img src="${hotel.img_url || 'https://via.placeholder.com/300'}" alt="Imagen hotel">
+        <img src="${hotel.img_url || 'https://via.placeholder.com/300'}" alt="Hotel image">
         <h3>${hotel.name}</h3>
         <p>${hotel.description}</p>
-        <p>Ciudad: ${hotel.city}</p>
-        <p>Calificacion: 🌟 ${hotel.rating_average}</p>
-        <button class="edit" data-id="${hotel.id_hotel}">Editar</button>
-        <button class="delete" data-id="${hotel.id_hotel}">Eliminar</button>
+        <p>City: ${hotel.city}</p>
+        <p>Rating: 🌟 ${hotel.rating_average}</p>
+        <button class="edit" data-id="${hotel.id_hotel}">Edit</button>
+        <button class="delete" data-id="${hotel.id_hotel}">Delete</button>
       `;
 
       container.appendChild(card);
     });
   } catch (err) {
-    console.error("Error al cargar hoteles:", err);
+    console.error("Error loading hotels:", err);
   }
 }
 
-// Eliminar hotel
+// Delete hotel
 const container = document.getElementById("hotel-list");
 
 container.addEventListener("click", async (e) => {
   if (e.target.classList.contains("delete")) {
     const hotelId = e.target.dataset.id;
-    if (confirm("¿Seguro que deseas eliminar este hotel?")) {
+    if (confirm("Are you sure you want to delete this hotel?")) {
       try {
         const res = await fetch(`${apiHotel}/${hotelId}`, {
           method: "DELETE"
         });
         if (res.ok) {
-          alert("Hotel eliminado ✅");
+          alert("Hotel deleted ✅");
           await loadHotels();
-          await cargarHoteles(); // recargar select de hoteles
+          await cargarHoteles(); // Reload hotel select
         } else {
-          alert("Error al eliminar hotel");
+          alert("Error deleting hotel");
         }
       } catch (err) {
         console.error("Error DELETE:", err);
@@ -109,15 +110,15 @@ container.addEventListener("click", async (e) => {
   }
 });
 
-// Listener para botones Editar
+// Listener for Edit buttons
 container.addEventListener("click", (e) => {
   if (e.target.classList.contains("edit")) {
     const hotelId = Number(e.target.dataset.id);
     const hotel = hoteles.find(h => h.id_hotel === hotelId);
 
-    if (!hotel) return alert("Hotel no encontrado");
+    if (!hotel) return alert("Hotel not found");
 
-    // Llenar el formulario con los datos
+    // Fill the form with hotel data
     document.getElementById("id_owner_hotel").value = hotel.id_owner;
     document.getElementById("name").value = hotel.name;
     document.getElementById("city").value = hotel.city;
@@ -125,9 +126,9 @@ container.addEventListener("click", (e) => {
     document.getElementById("rating_average").value = hotel.rating_average;
     document.getElementById("img_url").value = hotel.img_url;
 
-    // Marcar formulario en modo edición
+    // Mark form as edit mode
     hotelForm.dataset.editId = hotelId;
-    hotelForm.querySelector("button[type='submit']").textContent = "Actualizar Hotel";
+    hotelForm.querySelector("button[type='submit']").textContent = "Update Hotel";
 
     window.scrollTo({
     top: 0,
@@ -136,10 +137,11 @@ container.addEventListener("click", (e) => {
   }
 });
 
+// Hotel form submit event (Add/Edit)
 hotelForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const editId = hotelForm.dataset.editId; // Si existe, estamos editando
+  const editId = hotelForm.dataset.editId; // If exists, we are editing
 
   const hotelData = {
     id_owner: document.getElementById("id_owner_hotel").value,
@@ -153,14 +155,14 @@ hotelForm.addEventListener("submit", async (e) => {
   try {
     let res;
     if (editId) {
-      // Modo edición → PUT
+      // Edit mode → PUT
       res = await fetch(`${apiHotel}/${editId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(hotelData)
       });
     } else {
-      // Modo agregar → POST
+      // Add mode → POST
       res = await fetch(apiHotel, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -169,44 +171,44 @@ hotelForm.addEventListener("submit", async (e) => {
     }
 
     if (res.ok) {
-      alert(editId ? "Hotel actualizado ✅" : "Hotel agregado ✅");
-      delete hotelForm.dataset.editId; // limpiar modo edición
-      hotelForm.querySelector("button[type='submit']").textContent = "Agregar Hotel";
+      alert(editId ? "Hotel updated ✅" : "Hotel added ✅");
+      delete hotelForm.dataset.editId; // Clear edit mode
+      hotelForm.querySelector("button[type='submit']").textContent = "Add Hotel";
       hotelForm.reset();
-      await loadHotels(); // recargar lista
-      await cargarHoteles(); // recargar select de hoteles
+      await loadHotels(); // Reload list
+      await cargarHoteles(); // Reload hotel select
     } else {
-      alert(editId ? "Error al actualizar hotel" : "Error al agregar hotel");
+      alert(editId ? "Error updating hotel" : "Error adding hotel");
     }
   } catch (err) {
-    console.error("Error en la petición:", err);
+    console.error("Request error:", err);
   }
 });
 
 
-//CRUD para gestionar habitaciones de los habitaciones
+// CRUD for managing rooms
 
-// Función para llenar el select de hoteles
+// Function to fill hotel select for rooms
 async function cargarHoteles() {
   try {
     const response = await fetch(apiHotel); 
     const hoteles = await response.json();
 
-    // Obtener el select único por id
+    // Get the select by id
     const select = document.getElementById("hotel_id");
 
-    // resetear opciones
-    select.innerHTML = '<option value="">Seleccione un hotel</option>';
+    // Reset options
+    select.innerHTML = '<option value="">Select a hotel</option>';
 
-    // agregar cada hotel como opción
+    // Add each hotel as option
     hoteles.forEach(hotel => {
       const option = document.createElement("option");
-      option.value = hotel.id_hotel;   // ID del hotel
-      option.textContent = hotel.name; // Nombre del hotel
+      option.value = hotel.id_hotel;   // Hotel ID
+      option.textContent = hotel.name; // Hotel name
       select.appendChild(option);
     });
   } catch (error) {
-    console.error("Error cargando hoteles:", error);
+    console.error("Error loading hotels:", error);
   }
 }
 
@@ -214,9 +216,9 @@ document.addEventListener("DOMContentLoaded", cargarHoteles);
 
 const apiRoom = "http://localhost:5000/rooms";
 
-let rooms = []; // variable global para almacenar las habitaciones
+let rooms = []; // Global variable to store rooms
 
-// Función para cargar habitaciones
+// Function to load rooms
 async function loadRooms() {
   try {
     const res = await fetch(apiRoom);
@@ -230,39 +232,39 @@ async function loadRooms() {
       card.classList.add("room-card");
 
       card.innerHTML = `
-        <img src="${room.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="Imagen habitación">
-        <h3>Habitación ${room.number_room}</h3>
+        <img src="${room.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="Room image">
+        <h3>Room ${room.number_room}</h3>
         <p>Hotel ID: ${room.id_hotel}</p>
-        <p>Capacidad: ${room.capacity}</p>
-        <p>Precio: $${room.price}</p>
-        <p>Estado: ${room.state}</p>
-        <button class="edit" data-id="${room.id_room}">Editar</button>
-        <button class="delete" data-id="${room.id_room}">Eliminar</button>
+        <p>Capacity: ${room.capacity}</p>
+        <p>Price: $${room.price}</p>
+        <p>Status: ${room.state}</p>
+        <button class="edit" data-id="${room.id_room}">Edit</button>
+        <button class="delete" data-id="${room.id_room}">Delete</button>
       `;
 
       container.appendChild(card);
     });
   } catch (err) {
-    console.error("Error al cargar habitaciones:", err);
+    console.error("Error loading rooms:", err);
   }
 }
 
-// Eliminar habitación
+// Delete room
 const roomContainer = document.getElementById("room-list");
 
 roomContainer.addEventListener("click", async (e) => {
   if (e.target.classList.contains("delete")) {
     const roomId = e.target.dataset.id;
-    if (confirm("¿Seguro que deseas eliminar esta habitación?")) {
+    if (confirm("Are you sure you want to delete this room?")) {
       try {
         const res = await fetch(`${apiRoom}/${roomId}`, {
           method: "DELETE"
         });
         if (res.ok) {
-          alert("Habitación eliminada ✅");
+          alert("Room deleted ✅");
           await loadRooms();
         } else {
-          alert("Error al eliminar habitación");
+          alert("Error deleting room");
         }
       } catch (err) {
         console.error("Error DELETE:", err);
@@ -271,16 +273,15 @@ roomContainer.addEventListener("click", async (e) => {
   }
 });
 
-
-// Listener para botones Editar habitaciones
+// Listener for Edit buttons in rooms
 roomContainer.addEventListener("click", (e) => {
   if (e.target.classList.contains("edit")) {
     const roomId = Number(e.target.dataset.id);
     const room = rooms.find(r => r.id_room === roomId);
 
-    if (!room) return alert("Habitación no encontrada");
+    if (!room) return alert("Room not found");
 
-    // Llenar el formulario con los datos
+    // Fill the form with room data
     document.getElementById("hotel_id").value = room.id_hotel;
     document.getElementById("numero_habitacion").value = room.number_room;
     document.getElementById("capacidad").value = room.capacity;
@@ -288,9 +289,9 @@ roomContainer.addEventListener("click", (e) => {
     document.getElementById("room_img_url").value = room.img_url;
     document.getElementById("estado").value = room.state;
 
-    // Marcar formulario en modo edición
+    // Mark form as edit mode
     habitacionForm.dataset.editId = roomId;
-    habitacionForm.querySelector("button[type='submit']").textContent = "Actualizar Habitación";
+    habitacionForm.querySelector("button[type='submit']").textContent = "Update Room";
 
     window.scrollTo({
     top: 0,
@@ -299,11 +300,11 @@ roomContainer.addEventListener("click", (e) => {
   }
 });
 
-// Listener para envío del formulario (Agregar/Editar)
+// Listener for room form submit (Add/Edit)
 habitacionForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const editId = habitacionForm.dataset.editId; // Si existe → modo edición
+  const editId = habitacionForm.dataset.editId; // If exists → edit mode
 
   const roomData = {
     id_hotel: document.getElementById("hotel_id").value,
@@ -317,15 +318,15 @@ habitacionForm.addEventListener("submit", async (e) => {
   try {
     let res;
     if (editId) {
-      // Modo edición → PUT
-        console.log("Editando habitación con ID:", editId, roomData);
+      // Edit mode → PUT
+      console.log("Editing room with ID:", editId, roomData);
       res = await fetch(`${apiRoom}/${editId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(roomData)
       });
     } else {
-      // Modo agregar → POST
+      // Add mode → POST
       res = await fetch(apiRoom, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -334,22 +335,22 @@ habitacionForm.addEventListener("submit", async (e) => {
     }
 
     if (res.ok) {
-      alert(editId ? "Habitación actualizada ✅" : "Habitación agregada ✅");
+      alert(editId ? "Room updated ✅" : "Room added ✅");
       habitacionForm.removeAttribute("data-edit-id");
-      habitacionForm.querySelector("button[type='submit']").textContent = "Agregar Habitación";
+      habitacionForm.querySelector("button[type='submit']").textContent = "Add Room";
       habitacionForm.reset();
-      await loadRooms(); // recargar lista
+      await loadRooms(); // Reload list
     } else {
-      alert(editId ? "Error al actualizar habitación" : "Error al agregar habitación");
+      alert(editId ? "Error updating room" : "Error adding room");
     }
   } catch (err) {
-    console.error("Error en la petición:", err);
+    console.error("Request error:", err);
   }
 });
 
-// CRUD para gestionar actividades turísticas
+// CRUD for managing activities
 
-// Función para llenar el select de owners
+// Function to fill owner select for activities
 async function cargarOwners() {
   try {
     const response = await fetch("http://localhost:5000/owners"); 
@@ -357,10 +358,10 @@ async function cargarOwners() {
 
     const select = document.getElementById("actividad_owner");
 
-    // resetear opciones
-    select.innerHTML = '<option value="">Seleccione un Propietario</option>';
+    // Reset options
+    select.innerHTML = '<option value="">Select an Owner</option>';
 
-    // agregar cada owner
+    // Add each owner as option
     owners.forEach(owner => {
       const option = document.createElement("option");
       option.value = owner.id_owner;
@@ -369,20 +370,18 @@ async function cargarOwners() {
     });
 
   } catch (error) {
-    console.error("Error cargando owners:", error);
+    console.error("Error loading owners:", error);
   }
 }
 
-
-// Llamar cuando cargue la página o la sección
+// Call when page or section loads
 document.addEventListener("DOMContentLoaded", cargarOwners, cargarHoteles, cargarOwnersHotels);
-
 
 const apiActivity = "http://localhost:5000/activitys";
 
-let activities = []; // variable global para almacenar las actividades
+let activities = []; // Global variable to store activities
 
-// Función para cargar actividades
+// Function to load activities
 async function loadActivities() {
   try {
     const res = await fetch(apiActivity);
@@ -396,41 +395,41 @@ async function loadActivities() {
       card.classList.add("activity-card");
 
       card.innerHTML = `
-        <img src="${activity.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="Imagen actividad">
+        <img src="${activity.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="Activity image">
         <h3>${activity.name}</h3>
-        <p><strong>Descripción:</strong> ${activity.description || "Sin descripción"}</p>
-        <p><strong>Precio:</strong> $${activity.price}</p>
-        <p><strong>Duración:</strong> ${activity.duration || "No especificada"}</p>
-        <p><strong>Lugar:</strong> ${activity.place || "No definido"}</p>
-        <p><strong>Cupos:</strong> ${activity.quota_available}</p>
+        <p><strong>Description:</strong> ${activity.description || "No description"}</p>
+        <p><strong>Price:</strong> $${activity.price}</p>
+        <p><strong>Duration:</strong> ${activity.duration || "Not specified"}</p>
+        <p><strong>Location:</strong> ${activity.place || "Not defined"}</p>
+        <p><strong>Spots:</strong> ${activity.quota_available}</p>
         <p><strong>Owner ID:</strong> ${activity.id_owner}</p>
-        <button class="edit" data-id="${activity.id_activity}">Editar</button>
-        <button class="delete" data-id="${activity.id_activity}">Eliminar</button>
+        <button class="edit" data-id="${activity.id_activity}">Edit</button>
+        <button class="delete" data-id="${activity.id_activity}">Delete</button>
       `;
 
       container.appendChild(card);
     });
   } catch (err) {
-    console.error("Error al cargar actividades:", err);
+    console.error("Error loading activities:", err);
   }
 }
 
-// Eliminar actividad
+// Delete activity
 const activityContainer = document.getElementById("actividad-list");
 
 activityContainer.addEventListener("click", async (e) => {
   if (e.target.classList.contains("delete")) {
     const activityId = e.target.dataset.id;
-    if (confirm("¿Seguro que deseas eliminar esta actividad?")) {
+    if (confirm("Are you sure you want to delete this activity?")) {
       try {
         const res = await fetch(`${apiActivity}/${activityId}`, {
           method: "DELETE"
         });
         if (res.ok) {
-          alert("Actividad eliminada ✅");
-          await loadActivities(); // recargar la lista
+          alert("Activity deleted ✅");
+          await loadActivities(); // Reload list
         } else {
-          alert("Error al eliminar actividad ❌");
+          alert("Error deleting activity ❌");
         }
       } catch (err) {
         console.error("Error DELETE:", err);
@@ -439,15 +438,15 @@ activityContainer.addEventListener("click", async (e) => {
   }
 });
 
-// Listener para botones Editar actividades
+// Listener for Edit buttons in activities
 activityContainer.addEventListener("click", (e) => {
   if (e.target.classList.contains("edit")) {
     const activityId = Number(e.target.dataset.id);
     const activity = activities.find(a => a.id_activity === activityId);
 
-    if (!activity) return alert("Actividad no encontrada");
+    if (!activity) return alert("Activity not found");
 
-    // Llenar el formulario con los datos
+    // Fill the form with activity data
     document.getElementById("actividad_nombre").value = activity.name;
     document.getElementById("actividad_descripcion").value = activity.description;
     document.getElementById("actividad_precio").value = activity.price;
@@ -457,9 +456,9 @@ activityContainer.addEventListener("click", (e) => {
     document.getElementById("actividad_cupos").value = activity.quota_available;
     document.getElementById("actividad_owner").value = activity.id_owner;    
 
-    // Marcar formulario en modo edición
+    // Mark form as edit mode
     actividadForm.dataset.editId = activityId;
-    actividadForm.querySelector("button[type='submit']").textContent = "Actualizar Actividad";
+    actividadForm.querySelector("button[type='submit']").textContent = "Update Activity";
 
     window.scrollTo({
     top: 0,
@@ -468,11 +467,11 @@ activityContainer.addEventListener("click", (e) => {
   }
 });
 
-// Listener para envío del formulario (Agregar/Editar)
+// Listener for activity form submit (Add/Edit)
 actividadForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const editId = actividadForm.dataset.editId; // Si existe → modo edición
+  const editId = actividadForm.dataset.editId; // If exists → edit mode
 
   const activityData = {
     name: document.getElementById("actividad_nombre").value,
@@ -485,19 +484,19 @@ actividadForm.addEventListener("submit", async (e) => {
     id_owner: document.getElementById("actividad_owner").value
   };
 
-  console.log("Datos de la actividad:", activityData);
+  console.log("Activity data:", activityData);
 
   try {
     let res;
     if (editId) {
-      // Modo edición → PUT
+      // Edit mode → PUT
       res = await fetch(`${apiActivity}/${editId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(activityData)
       });
     } else {
-      // Modo agregar → POST
+      // Add mode → POST
       res = await fetch(apiActivity, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -506,30 +505,26 @@ actividadForm.addEventListener("submit", async (e) => {
     }
 
     if (res.ok) {
-      alert(editId ? "Actividad actualizada ✅" : "Actividad agregada ✅");
-      delete actividadForm.dataset.editId; // limpiar modo edición
-      actividadForm.querySelector("button[type='submit']").textContent = "Agregar Actividad";
+      alert(editId ? "Activity updated ✅" : "Activity added ✅");
+      delete actividadForm.dataset.editId; // Clear edit mode
+      actividadForm.querySelector("button[type='submit']").textContent = "Add Activity";
       actividadForm.reset();
-      await loadActivities(); // recargar lista
+      await loadActivities(); // Reload list
     } else {
-      alert(editId ? "Error al actualizar actividad" : "Error al agregar actividad");
+      alert(editId ? "Error updating activity" : "Error adding activity");
     }
   } catch (err) {
-    console.error("Error en la petición:", err);
+    console.error("Request error:", err);
   }
 });
 
-
-
-
-
-// Obtener todos los botones de la barra lateral
+// Get all sidebar buttons with data-section attribute
 const sidebarButtons = document.querySelectorAll(".sidebar button[data-section]");
 
-// Obtener todas las secciones
+// Get all sections
 const sections = document.querySelectorAll(".section");
 
-// Función para mostrar solo la sección seleccionada
+// Function to show only the selected section
 function showSection(sectionId) {
   sections.forEach(sec => {
     if (sec.id === `section-${sectionId}`) {
@@ -540,7 +535,7 @@ function showSection(sectionId) {
   });
 }
 
-// Asignar evento a cada botón
+// Assign event to each sidebar button
 sidebarButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     const section = btn.dataset.section;
@@ -548,7 +543,7 @@ sidebarButtons.forEach(btn => {
   });
 });
 
-// Opcional: mostrar por defecto "hoteles"
+// Optionally: show "hoteles" section by default
 showSection("hoteles");
 
 

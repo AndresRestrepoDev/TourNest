@@ -2,27 +2,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const role = localStorage.getItem("role");
 
+  // Check if user is logged in and is user
   if (isLoggedIn !== "true" || role !== "user") {
-    alert("Acceso no autorizado");
+    alert("Unauthorized access");
     window.location.href = "../index.html"; 
   }
 
-  // Mostrar nombre del usuario
-  const UserName = localStorage.getItem("name") || "Usuario";
+  // Show user name
+  const UserName = localStorage.getItem("name") || "User";
   document.getElementById("User-name").textContent = UserName;
 
-  // Cargar hoteles y actividades al iniciar
+  // Load hotels and activities on start
   loadUserHotels();
   loadUserActivities();
 });
 
-// Cerrar sesión
+// Logout
 document.getElementById("logoutBtn").addEventListener("click", () => {
   localStorage.clear();
   window.location.href = "../index.html";
 });
 
-// Secciones y navegación
+// Sections and navigation
 const sidebarButtons = document.querySelectorAll(".sidebar button[data-section]");
 const sections = document.querySelectorAll(".section");
 
@@ -38,20 +39,20 @@ sidebarButtons.forEach(btn => {
   });
 });
 
-// Mostrar por defecto hoteles
+// Show hotels section by default
 showSection("hoteles-disponibles");
 
-// Elementos contenedores
+// Container elements
 const userHotelList = document.getElementById("user-hotel-list");
 const userRoomList = document.getElementById("user-room-list");
 const actividadList = document.getElementById("actividad-list");
 
-// Cargar hoteles
+// Load hotels
 async function loadUserHotels() {
-  userHotelList.innerHTML = "<p>Cargando hoteles...</p>";
+  userHotelList.innerHTML = "<p>Loading hotels...</p>";
   try {
     const res = await fetch("http://localhost:5000/hotels");
-    if (!res.ok) throw new Error("Error cargando hoteles");
+    if (!res.ok) throw new Error("Error loading hotels");
     const hotels = await res.json();
 
     userHotelList.innerHTML = "";
@@ -64,49 +65,49 @@ async function loadUserHotels() {
         <p>${hotel.city}</p>
         <p>${hotel.description}</p>
         <p>⭐ ${hotel.rating_average}</p>
-        <button class="view-rooms-btn" data-id="${hotel.id_hotel}">Ver Habitaciones</button>
+        <button class="view-rooms-btn" data-id="${hotel.id_hotel}">View Rooms</button>
       `;
       userHotelList.appendChild(card);
     });
   } catch (err) {
     console.error(err);
-    userHotelList.innerHTML = "<p>Error cargando hoteles</p>";
+    userHotelList.innerHTML = "<p>Error loading hotels</p>";
   }
 }
 
-// 1. Obtén las referencias al nuevo modal
+// 1. Get references to the new modal
 const modalProximamente = document.getElementById("modal-proximamente");
 const closeBtn = document.querySelector("#modal-proximamente .close");
 
-// 2. Escucha los clics en el contenedor padre de las actividades
+// 2. Listen for clicks in the parent container of rooms
 document.getElementById("user-room-list").addEventListener("click", (event) => {
-  // 3. Verifica si el clic fue en un elemento con la clase .Modal-Reservas
+  // 3. Check if the click was on an element with the class .Modal-Reservas
   if (event.target.classList.contains("Modal-Reservas")) {
-    event.preventDefault(); // Evita que el enlace recargue la página
-    modalProximamente.style.display = "block"; // Muestra el modal
+    event.preventDefault(); // Prevent link from reloading the page
+    modalProximamente.style.display = "block"; // Show modal
   }
 });
 
-// 4. Lógica para cerrar el modal
+// 4. Logic to close the modal
 if (closeBtn) {
   closeBtn.addEventListener('click', () => {
     modalProximamente.style.display = "none";
   });
 }
 
-// 5. Cerrar el modal al hacer clic fuera del contenido
+// 5. Close the modal when clicking outside the content
 window.addEventListener('click', (event) => {
   if (event.target === modalProximamente) {
     modalProximamente.style.display = "none";
   }
 });
 
-// Cargar habitaciones según hotel
+// Load rooms by hotel
 async function loadRooms(hotelId) {
-  userRoomList.innerHTML = "<p>Cargando habitaciones...</p>";
+  userRoomList.innerHTML = "<p>Loading rooms...</p>";
   try {
     const res = await fetch(`http://localhost:5000/rooms/hotel/${hotelId}`);
-    if (!res.ok) throw new Error("Error cargando habitaciones");
+    if (!res.ok) throw new Error("Error loading rooms");
     const rooms = await res.json();
 
     userRoomList.innerHTML = "";
@@ -114,25 +115,25 @@ async function loadRooms(hotelId) {
       const card = document.createElement("div");
       card.classList.add("room-card");
       card.innerHTML = `
-        <img src="${room.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="Habitación">
-        <h4>Habitación ${room.number_room}</h4>
-        <p>Capacidad: ${room.capacity}</p>
-        <p>Precio: $${room.price}</p>
-        <p>Estado: ${room.state}</p>
-        <a href="#" class="Modal-Reservas">Reservar</a>
+        <img src="${room.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="Room">
+        <h4>Room ${room.number_room}</h4>
+        <p>Capacity: ${room.capacity}</p>
+        <p>Price: $${room.price}</p>
+        <p>Status: ${room.state}</p>
+        <a href="#" class="Modal-Reservas">Reserve</a>
       `;
       userRoomList.appendChild(card);
     });
 
-    // Mostrar sección de habitaciones
+    // Show rooms section
     showSection("habitaciones-disponibles");
   } catch (err) {
     console.error(err);
-    userRoomList.innerHTML = "<p>Error cargando habitaciones</p>";
+    userRoomList.innerHTML = "<p>Error loading rooms</p>";
   }
 }
 
-// Clic en botón "Ver Habitaciones"
+// Click on "View Rooms" button
 userHotelList.addEventListener("click", (e) => {
   if (e.target.classList.contains("view-rooms-btn")) {
     const hotelId = e.target.dataset.id;
@@ -140,44 +141,40 @@ userHotelList.addEventListener("click", (e) => {
   }
 });
 
-// Botón volver a hoteles
+// Button to go back to hotels
 document.getElementById("back-to-hotels").addEventListener("click", () => {
   showSection("hoteles-disponibles");
 });
 
-// 1. Obtén las referencias al nuevo modal
-// const modalProximamente = document.getElementById("modal-proximamente");
-// const closeBtn = document.querySelector("#modal-proximamente .close");
-
-// 2. Escucha los clics en el contenedor padre de las actividades
+// 2. Listen for clicks in the parent container of activities
 document.getElementById("actividad-list").addEventListener("click", (event) => {
-  // 3. Verifica si el clic fue en un elemento con la clase .Modal-Reservas
+  // 3. Check if the click was on an element with the class .Modal-Reservas
   if (event.target.classList.contains("Modal-Reservas")) {
-    event.preventDefault(); // Evita que el enlace recargue la página
-    modalProximamente.style.display = "block"; // Muestra el modal
+    event.preventDefault(); // Prevent link from reloading the page
+    modalProximamente.style.display = "block"; // Show modal
   }
 });
 
-// 4. Lógica para cerrar el modal
+// 4. Logic to close the modal
 if (closeBtn) {
   closeBtn.addEventListener('click', () => {
     modalProximamente.style.display = "none";
   });
 }
 
-// 5. Cerrar el modal al hacer clic fuera del contenido
+// 5. Close the modal when clicking outside the content
 window.addEventListener('click', (event) => {
   if (event.target === modalProximamente) {
     modalProximamente.style.display = "none";
   }
 });
 
-// Cargar actividades
+// Load activities
 async function loadUserActivities() {
-  actividadList.innerHTML = "<p>Cargando actividades...</p>";
+  actividadList.innerHTML = "<p>Loading activities...</p>";
   try {
     const res = await fetch("http://localhost:5000/activitys");
-    if (!res.ok) throw new Error("Error cargando actividades");
+    if (!res.ok) throw new Error("Error loading activities");
     const activities = await res.json();
 
     actividadList.innerHTML = "";
@@ -188,17 +185,17 @@ async function loadUserActivities() {
         <img src="${act.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}">
         <h3>${act.name}</h3>
         <p>${act.description}</p>
-        <p><strong>Precio:</strong> $${act.price}</p>
-        <p><strong>Duración:</strong> ${act.duration || "No especificada"}</p>
-        <p><strong>Lugar:</strong> ${act.place || "No especificado"}</p>
-        <p><strong>Cupos disponibles:</strong> ${act.quota_available}</p>
-        <a href="#" class="Modal-Reservas">Reservar</a>
+        <p><strong>Price:</strong> $${act.price}</p>
+        <p><strong>Duration:</strong> ${act.duration || "Not specified"}</p>
+        <p><strong>Location:</strong> ${act.place || "Not specified"}</p>
+        <p><strong>Available spots:</strong> ${act.quota_available}</p>
+        <a href="#" class="Modal-Reservas">Reserve</a>
       `;
       actividadList.appendChild(card);
     });
   } catch (err) {
     console.error(err);
-    actividadList.innerHTML = "<p>Error cargando actividades</p>";
+    actividadList.innerHTML = "<p>Error loading activities</p>";
   }
 }
 

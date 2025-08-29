@@ -1,14 +1,14 @@
 Kick-off
-En nuestra primera reunión de lanzamiento, conocida como kick-off, el equipo definió la dirección del proyecto. Discutimos varias ideas y analizamos diferentes casos de uso, decidiendo finalmente enfocarnos en la categoría de turismo. Acordamos los objetivos generales, repartimos los roles y responsabilidades, y comenzamos la documentación inicial del proyecto.
+In our first launch meeting, known as the kick-off, the team defined the direction of the project. We discussed several ideas and analyzed different use cases, finally deciding to focus on the tourism category. We agreed on the general objectives, distributed roles and responsibilities, and began the initial documentation of the project.
 
 Daily #1
-Durante esta primera reunión, revisamos la documentación del proyecto. Aunque ya teníamos una visión general, nos dimos cuenta de que los objetivos específicos no estaban claramente definidos y el alcance del proyecto aún no se había evaluado. Para avanzar, cada miembro del equipo se responsabilizó de investigar y redactar los puntos clave, asegurando que cada sección de la documentación fuera clara y relevante para nuestro proyecto.
+During this first meeting, we reviewed the project documentation. Although we already had a general vision, we realized that the specific objectives were not clearly defined and the scope of the project had not yet been evaluated. To move forward, each team member took responsibility for researching and drafting the key points, ensuring that each section of the documentation was clear and relevant to our project.
 
 Daily #2
-En esta reunión, revisamos el proyecto con una perspectiva más clara gracias a la documentación del día anterior. Esto nos dio una visión más amplia de lo que necesitábamos construir. Como resultado, las tareas se dividieron de la siguiente manera: dos personas se encargaron de crear el Product Backlog (lista de tareas pendientes del producto) y las otras dos se enfocaron en redactar las historias de usuario. El resto del día se dedicó a completar estas tareas.
+In this meeting, we reviewed the project with a clearer perspective thanks to the documentation from the previous day. This gave us a broader vision of what we needed to build. As a result, tasks were divided as follows: two people were in charge of creating the Product Backlog (list of pending product tasks) and the other two focused on writing the user stories. The rest of the day was dedicated to completing these tasks.
 
 Daily #3
-El enfoque de esta reunión fue la definición de nuevas tareas y la finalización del documento técnico. Además, hicimos un énfasis en el uso de Git para el trabajo colaborativo. Reforzamos los comandos esenciales y establecimos reglas para la gestión de ramas para evitar fusiones incorrectas en el código.
+The focus of this meeting was the definition of new tasks and the completion of the technical document. In addition, we emphasized the use of Git for collaborative work. We reinforced the essential commands and established rules for branch management to avoid incorrect merges in the code.
 
 Daily #4
-En este daily repartimos tareas de la semana 2 para por fin dejar listo todo el tema de la documentación y seguir con la parte de tirar codigo. El product owner termino el sprint plannig y dejo listo el product backlog, Andres empezo a crear el script de la base de datos, Jeronimo creo el modelo relacional y la compañera Yancelly empezo a crear el figma
+In this daily, we distributed tasks for week 2 to finally finish all the documentation and continue with the coding part. The product owner finished the sprint planning and prepared the product backlog, Andres started creating the database script, Jeronimo created the relational model, and our teammate Yancelly began designing

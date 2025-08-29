@@ -2,45 +2,50 @@ const apiHotel = "http://localhost:5000/hotels";
 const apiHabitacion = "http://localhost:5000/rooms";
 const apiActividad = "http://localhost:5000/activitys";
 
+// When the DOM is loaded, check login and load data
 document.addEventListener("DOMContentLoaded", () => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const role = localStorage.getItem("role");
   const id = localStorage.getItem("id");
   const name = localStorage.getItem("name");
 
+  // Check if user is logged in and is owner
   if (isLoggedIn !== "true" || role !== "owner") {
-    alert("Acceso no autorizado");
+    alert("Access denied");
     window.location.href = "../index.html"; 
   }
 });
 
+// Logout button event
 document.getElementById("logoutBtn").addEventListener("click", () => {
-  localStorage.clear(); // elimina toda la sesión
+  localStorage.clear(); // Remove all session data
   window.location.href = "../index.html"; 
 });
 
-// Mostrar nombre del propietario
+// Show owner name in sidebar
 const ownerName = localStorage.getItem("name");
 if (ownerName) {
   document.getElementById("owner-name").textContent = ownerName;
 } else {
-  document.getElementById("owner-name").textContent = "Propietario";
+  document.getElementById("owner-name").textContent = "Owner";
 } 
 
 let hotels = [];
 const container = document.getElementById("hotel-list");
 const hotelForm = document.getElementById("hotelForm");
 
+// Load hotels for the logged owner
 async function loadHotels() {
   const ownerId = localStorage.getItem("id");
-  container.innerHTML = ""; // limpiar antes de renderizar
+  container.innerHTML = ""; // Clear before rendering
 
   try {
     const response = await fetch(`http://localhost:5000/hotels/owner/${ownerId}`);
-    if (!response.ok) throw new Error("Error en la respuesta del servidor");
+    if (!response.ok) throw new Error("Server response error");
 
     hotels = await response.json();
 
+    // Render hotel cards
     hotels.forEach(hotel => {
       const card = document.createElement("div");
       card.classList.add("hotel-card");
@@ -50,12 +55,12 @@ async function loadHotels() {
           <img src="${hotel.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="${hotel.name}">
           <div class="hotel-info">
             <h3>${hotel.name}</h3>
-            <p><strong>Ciudad:</strong> ${hotel.city}</p>
+            <p><strong>City:</strong> ${hotel.city}</p>
             <p><strong>Rating:</strong> ⭐ ${hotel.rating_average}</p>
             <p>${hotel.description}</p>
             <div class="hotel-actions">
-              <button class="update-btn" data-id="${hotel.id_hotel}">Editar</button>
-              <button class="delete-btn" data-id="${hotel.id_hotel}">Eliminar</button>
+              <button class="update-btn" data-id="${hotel.id_hotel}">Edit</button>
+              <button class="delete-btn" data-id="${hotel.id_hotel}">Delete</button>
             </div>
           </div>
         </div>
@@ -64,22 +69,23 @@ async function loadHotels() {
     });
 
   } catch (error) {
-    console.error("Error cargando hoteles:", error);
+    console.error("Error loading hotels:", error);
   }
 }
 
-// Render inicial
+// Initial render of hotels when DOM is loaded
 document.addEventListener("DOMContentLoaded", loadHotels);
 
-// Manejo de botones Editar y Eliminar
+// Handle Edit and Delete buttons for hotels
 container.addEventListener("click", (e) => {
   const idHotel = Number(e.target.dataset.id);
   const hotel = hotels.find(h => h.id_hotel === idHotel);
 
+  // Edit hotel
   if (e.target.classList.contains("update-btn")) {
-    if (!hotel) return alert("Hotel no encontrado");
+    if (!hotel) return alert("Hotel not found");
 
-    // Llenar formulario
+    // Fill form with hotel data
     document.getElementById("hotel_nombre").value = hotel.name;
     document.getElementById("hotel_ciudad").value = hotel.city;
     document.getElementById("hotel_descripcion").value = hotel.description;
@@ -87,20 +93,21 @@ container.addEventListener("click", (e) => {
     document.getElementById("hotel_img_url").value = hotel.img_url || "";
 
     hotelForm.dataset.editId = idHotel;
-    hotelForm.querySelector("button[type='submit']").textContent = "Actualizar Hotel";
+    hotelForm.querySelector("button[type='submit']").textContent = "Update Hotel";
 
+  // Delete hotel
   } else if (e.target.classList.contains("delete-btn")) {
-    const confirmDelete = confirm("¿Seguro que deseas eliminar este hotel?");
+    const confirmDelete = confirm("Are you sure you want to delete this hotel?");
     if (!confirmDelete) return;
 
     fetch(`http://localhost:5000/hotels/${idHotel}`, { method: "DELETE" })
       .then(res => {
-        if (!res.ok) throw new Error("Error eliminando hotel");
-        // Actualizar array y renderizar
+        if (!res.ok) throw new Error("Error deleting hotel");
+        // Update array and render
         hotels = hotels.filter(h => h.id_hotel !== idHotel);
         loadHotels();
-        cargarHoteles(); // actualizar select
-        alert("Hotel eliminado con éxito");
+        cargarHoteles(); // Update select
+        alert("Hotel deleted successfully");
       })
       .catch(err => console.error(err));
   }
@@ -111,12 +118,13 @@ container.addEventListener("click", (e) => {
     });
 });
 
-// Manejo de formulario (Agregar / Editar)
+// Handle hotel form (Add / Edit)
 hotelForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const ownerId = localStorage.getItem("id");
   const editId = hotelForm.dataset.editId;
 
+  // Collect hotel data from form
   const hotelData = {
     id_owner: parseInt(ownerId),
     name: document.getElementById("hotel_nombre").value,
@@ -137,48 +145,48 @@ hotelForm.addEventListener("submit", async (e) => {
     });
 
     if (res.ok) {
-      alert(editId ? "Hotel actualizado ✅" : "Hotel agregado ✅");
+      alert(editId ? "Hotel updated ✅" : "Hotel added ✅");
       hotelForm.reset();
       delete hotelForm.dataset.editId;
-      hotelForm.querySelector("button[type='submit']").textContent = "Agregar Hotel";
-      loadHotels(); // recargar lista sin duplicados
-      cargarHoteles(); // actualizar select
+      hotelForm.querySelector("button[type='submit']").textContent = "Add Hotel";
+      loadHotels(); // Reload list
+      cargarHoteles(); // Update select
     } else {
-      alert("Error al guardar hotel");
+      alert("Error saving hotel");
     }
   } catch (err) {
     console.error(err);
   }
 });
 
-//CRUD para gestionar habitaciones de los habitaciones
+// CRUD for managing rooms
 
-// Función para llenar el select de hoteles solo del owner logueado
+// Function to fill hotel select only for the logged owner
 async function cargarHoteles() {
   try {
     const response = await fetch(apiHotel); 
     const hoteles = await response.json();
 
-    const ownerId = parseInt(localStorage.getItem("id")); // id del owner logueado
+    const ownerId = parseInt(localStorage.getItem("id")); // Logged owner ID
 
-    // filtrar solo hoteles de este owner
+    // Filter only hotels for this owner
     const misHoteles = hoteles.filter(hotel => hotel.id_owner === ownerId);
 
     const select = document.getElementById("hotel_ident");
 
-    // resetear opciones
-    select.innerHTML = '<option value="">Seleccione un hotel</option>';
+    // Reset options
+    select.innerHTML = '<option value="">Select a hotel</option>';
 
-    // agregar cada hotel como opción
+    // Add each hotel as option
     misHoteles.forEach(hotel => {
       const option = document.createElement("option");
-      option.value = hotel.id_hotel;   // ID del hotel
-      option.textContent = hotel.name; // Nombre del hotel
+      option.value = hotel.id_hotel;   // Hotel ID
+      option.textContent = hotel.name; // Hotel name
       select.appendChild(option);
     });
 
   } catch (error) {
-    console.error("Error cargando hoteles:", error);
+    console.error("Error loading hotels:", error);
   }
 }
 
@@ -186,17 +194,17 @@ document.addEventListener("DOMContentLoaded", cargarHoteles);
 
 let habitaciones = [];
 const habitacionForm = document.getElementById("habitacionForm");
-const habitacionContainer = document.getElementById("room-list"); // crea un div con este id en tu HTML
+const habitacionContainer = document.getElementById("room-list"); // Create a div with this id in your HTML
 const hotelSelect = document.getElementById("hotel_ident");
 
-// 1️⃣ Cargar hoteles en el select (solo del owner logueado)
+// Load hotels in the select (only for the logged owner)
 async function cargarHoteles() {
   try {
     const ownerId = parseInt(localStorage.getItem("id"));
     const res = await fetch(`${apiHotel}/owner/${ownerId}`);
     const hoteles = await res.json();
 
-    hotelSelect.innerHTML = '<option value="">Seleccione uno de mis hoteles</option>';
+    hotelSelect.innerHTML = '<option value="">Select one of my hotels</option>';
     hoteles.forEach(hotel => {
       const option = document.createElement("option");
       option.value = hotel.id_hotel;
@@ -204,61 +212,62 @@ async function cargarHoteles() {
       hotelSelect.appendChild(option);
     });
   } catch (err) {
-    console.error("Error cargando hoteles:", err);
+    console.error("Error loading hotels:", err);
   }
 }
 
-// 2️⃣ Cargar habitaciones del owner
+// Load rooms for the owner
 async function loadHabitaciones() {
   try {
     const ownerId = parseInt(localStorage.getItem("id"));
-    habitacionContainer.innerHTML = ""; // limpiar contenedor
+    habitacionContainer.innerHTML = ""; // Clear container
 
-    // Traer todas las habitaciones
+    // Get all rooms
     const res = await fetch(apiHabitacion);
     let rooms = await res.json();
 
-    // Filtrar solo habitaciones de los hoteles del owner
+    // Filter only rooms for the owner's hotels
     const hotelRes = await fetch(`${apiHotel}/owner/${ownerId}`);
     const misHoteles = await hotelRes.json();
     const hotelIds = misHoteles.map(h => h.id_hotel);
 
     habitaciones = rooms.filter(r => hotelIds.includes(r.id_hotel));
 
-    // Renderizar
+    // Render room cards
     habitaciones.forEach(room => {
       const card = document.createElement("div");
       card.classList.add("room-card");
-      card.dataset.id = room.id_room; // suponiendo que tu id de habitación es id_room
+      card.dataset.id = room.id_room; // Assuming your room id is id_room
       card.innerHTML = `
-        <img src="${room.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="Habitación">
-        <h3>Hotel: ${misHoteles.find(h => h.id_hotel === room.id_hotel)?.name || "Desconocido"}</h3>
-        <p>Número: ${room.number_room}</p>
-        <p>Capacidad: ${room.capacity}</p>
-        <p>Precio: $${room.price}</p>
-        <p>Estado: ${room.state}</p>
-        <button class="update-room-btn" data-id="${room.id_room}">Editar</button>
-        <button class="delete-room-btn" data-id="${room.id_room}">Eliminar</button>
+        <img src="${room.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="Room">
+        <h3>Hotel: ${misHoteles.find(h => h.id_hotel === room.id_hotel)?.name || "Unknown"}</h3>
+        <p>Number: ${room.number_room}</p>
+        <p>Capacity: ${room.capacity}</p>
+        <p>Price: $${room.price}</p>
+        <p>Status: ${room.state}</p>
+        <button class="update-room-btn" data-id="${room.id_room}">Edit</button>
+        <button class="delete-room-btn" data-id="${room.id_room}">Delete</button>
       `;
       habitacionContainer.appendChild(card);
     });
   } catch (err) {
-    console.error("Error cargando habitaciones:", err);
+    console.error("Error loading rooms:", err);
   }
 }
 
-// 4️⃣ Inicializar todo al cargar la página
+// Initialize everything when the page loads
 document.addEventListener("DOMContentLoaded", () => {
   cargarHoteles();
   loadHabitaciones();
 });
 
-// Agregar / Editar habitación
+// Add / Edit room
 habitacionForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const editId = habitacionForm.dataset.editId;
 
+  // Collect room data from form
   const roomData = {
     id_hotel: parseInt(hotelSelect.value),
     capacity: parseInt(document.getElementById("capacidad").value),
@@ -279,13 +288,13 @@ habitacionForm.addEventListener("submit", async (e) => {
     });
 
     if (res.ok) {
-      alert(editId ? "Habitación actualizada ✅" : "Habitación agregada ✅");
+      alert(editId ? "Room updated ✅" : "Room added ✅");
       habitacionForm.reset();
       delete habitacionForm.dataset.editId;
-      habitacionForm.querySelector("button[type='submit']").textContent = "Agregar Habitación";
+      habitacionForm.querySelector("button[type='submit']").textContent = "Add Room";
       await loadHabitaciones();
     } else {
-      alert("Error al guardar habitación");
+      alert("Error saving room");
     }
   } catch (err) {
     console.error(err);
@@ -297,13 +306,14 @@ habitacionForm.addEventListener("submit", async (e) => {
     });
 });
 
-// Editar / Eliminar habitación desde las cards
+// Edit / Delete room from cards
 habitacionContainer.addEventListener("click", (e) => {
   const idRoom = Number(e.target.dataset.id);
   const room = habitaciones.find(r => r.id_room === idRoom);
 
+  // Edit room
   if (e.target.classList.contains("update-room-btn")) {
-    if (!room) return alert("Habitación no encontrada");
+    if (!room) return alert("Room not found");
 
     hotelSelect.value = room.id_hotel;
     document.getElementById("numero_habitacion").value = room.number_room;
@@ -313,18 +323,19 @@ habitacionContainer.addEventListener("click", (e) => {
     document.getElementById("estado").value = room.state;
 
     habitacionForm.dataset.editId = idRoom;
-    habitacionForm.querySelector("button[type='submit']").textContent = "Actualizar Habitación";
+    habitacionForm.querySelector("button[type='submit']").textContent = "Update Room";
 
+  // Delete room
   } else if (e.target.classList.contains("delete-room-btn")) {
-    if (!confirm("¿Desea eliminar esta habitación?")) return;
+    if (!confirm("Do you want to delete this room?")) return;
 
     fetch(`${apiHabitacion}/${idRoom}`, { method: "DELETE" })
       .then(res => {
-        if (!res.ok) throw new Error("Error eliminando habitación");
+        if (!res.ok) throw new Error("Error deleting room");
         habitaciones = habitaciones.filter(r => r.id_room !== idRoom);
         loadHabitaciones();
         cargarHoteles();
-        alert("Habitación eliminada ✅");
+        alert("Room deleted ✅");
       })
       .catch(err => console.error(err));
     cargarHoteles();
@@ -336,22 +347,23 @@ habitacionContainer.addEventListener("click", (e) => {
     });
 });
 
-// CRUD para gestionar actividades de los propietarios
+// CRUD for managing owner activities
 
 let actividades = [];
 const actividadContainer = document.getElementById("actividad-list");
 const actividadForm = document.getElementById("actividadForm");
 
-// Cargar actividades del owner logueado
+// Load activities for the logged owner
 async function loadActividades() {
   try {
     const ownerId = parseInt(localStorage.getItem("id"));
     actividadContainer.innerHTML = "";
 
     const res = await fetch(`${apiActividad}/owner/${ownerId}`);
-    if (!res.ok) throw new Error("Error cargando actividades");
+    if (!res.ok) throw new Error("Error loading activities");
     actividades = await res.json();
 
+    // Render activity cards
     actividades.forEach(act => {
       const card = document.createElement("div");
       card.classList.add("actividad-card");
@@ -361,12 +373,12 @@ async function loadActividades() {
         <img src="${act.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}" alt="${act.name}">
         <h3>${act.name}</h3>
         <p>${act.description}</p>
-        <p><strong>Precio:</strong> $${act.price}</p>
-        <p><strong>Duración:</strong> ${act.duration || "No especificada"}</p>
-        <p><strong>Lugar:</strong> ${act.place || "No especificado"}</p>
-        <p><strong>Cupos disponibles:</strong> ${act.quota_available}</p>
-        <button class="update-actividad-btn" data-id="${act.id_activity}">Editar</button>
-        <button class="delete-actividad-btn" data-id="${act.id_activity}">Eliminar</button>
+        <p><strong>Price:</strong> $${act.price}</p>
+        <p><strong>Duration:</strong> ${act.duration || "Not specified"}</p>
+        <p><strong>Location:</strong> ${act.place || "Not specified"}</p>
+        <p><strong>Available spots:</strong> ${act.quota_available}</p>
+        <button class="update-actividad-btn" data-id="${act.id_activity}">Edit</button>
+        <button class="delete-actividad-btn" data-id="${act.id_activity}">Delete</button>
       `;
 
       actividadContainer.appendChild(card);
@@ -377,11 +389,12 @@ async function loadActividades() {
   }
 }
 
-// Agregar / Editar actividad
+// Add / Edit activity
 actividadForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const editId = actividadForm.dataset.editId;
 
+  // Collect activity data from form
   const actData = {
     id_owner: parseInt(localStorage.getItem("id")),
     name: document.getElementById("actividad_nombre").value,
@@ -404,13 +417,13 @@ actividadForm.addEventListener("submit", async (e) => {
     });
 
     if (res.ok) {
-      alert(editId ? "Actividad actualizada ✅" : "Actividad agregada ✅");
+      alert(editId ? "Activity updated ✅" : "Activity added ✅");
       actividadForm.reset();
       delete actividadForm.dataset.editId;
-      actividadForm.querySelector("button[type='submit']").textContent = "Agregar Actividad";
+      actividadForm.querySelector("button[type='submit']").textContent = "Add Activity";
       await loadActividades();
     } else {
-      alert("Error al guardar actividad");
+      alert("Error saving activity");
     }
 
   } catch (err) {
@@ -423,13 +436,14 @@ actividadForm.addEventListener("submit", async (e) => {
     });
 });
 
-// Editar / Eliminar desde las cards
+// Edit / Delete activity from cards
 actividadContainer.addEventListener("click", (e) => {
   const idAct = Number(e.target.dataset.id);
   const act = actividades.find(a => a.id_activity === idAct);
 
+  // Edit activity
   if (e.target.classList.contains("update-actividad-btn")) {
-    if (!act) return alert("Actividad no encontrada");
+    if (!act) return alert("Activity not found");
 
     document.getElementById("actividad_nombre").value = act.name;
     document.getElementById("actividad_descripcion").value = act.description;
@@ -440,17 +454,18 @@ actividadContainer.addEventListener("click", (e) => {
     document.getElementById("actividad_cupos").value = act.quota_available;
 
     actividadForm.dataset.editId = idAct;
-    actividadForm.querySelector("button[type='submit']").textContent = "Actualizar Actividad";
+    actividadForm.querySelector("button[type='submit']").textContent = "Update Activity";
 
+  // Delete activity
   } else if (e.target.classList.contains("delete-actividad-btn")) {
-    if (!confirm("¿Desea eliminar esta actividad?")) return;
+    if (!confirm("Do you want to delete this activity?")) return;
 
     fetch(`${apiActividad}/${idAct}`, { method: "DELETE" })
       .then(res => {
-        if (!res.ok) throw new Error("Error eliminando actividad");
+        if (!res.ok) throw new Error("Error deleting activity");
         actividades = actividades.filter(a => a.id_activity !== idAct);
         loadActividades();
-        alert("Actividad eliminada ✅");
+        alert("Activity deleted successfully");
       })
       .catch(err => console.error(err));
   }
@@ -461,18 +476,16 @@ actividadContainer.addEventListener("click", (e) => {
     });
 });
 
-// Inicializar
+// Initialize activities on page load
 document.addEventListener("DOMContentLoaded", loadActividades);
 
-
-
-// Obtener todos los botones de la barra lateral
+// Get all sidebar buttons with data-section attribute
 const sidebarButtons = document.querySelectorAll(".sidebar button[data-section]");
 
-// Obtener todas las secciones
+// Get all sections
 const sections = document.querySelectorAll(".section");
 
-// Función para mostrar solo la sección seleccionada
+// Function to show only the selected section
 function showSection(sectionId) {
   sections.forEach(sec => {
     if (sec.id === `section-${sectionId}`) {
@@ -483,7 +496,7 @@ function showSection(sectionId) {
   });
 }
 
-// Asignar evento a cada botón
+// Assign event to each sidebar button
 sidebarButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     const section = btn.dataset.section;
@@ -491,6 +504,4 @@ sidebarButtons.forEach(btn => {
   });
 });
 
-// Mostrar por defecto "hoteles"
-showSection("mis-hoteles");  
-  
+// Show "mis-hoteles" section
