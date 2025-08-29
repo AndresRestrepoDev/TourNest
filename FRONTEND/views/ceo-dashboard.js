@@ -72,7 +72,7 @@ async function loadHotels() {
         <h3>${hotel.name}</h3>
         <p>${hotel.description}</p>
         <p>Ciudad: ${hotel.city}</p>
-        <p>Calificacion: ${hotel.rating_average}</p>
+        <p>Calificacion: 🌟 ${hotel.rating_average}</p>
         <button class="edit" data-id="${hotel.id_hotel}">Editar</button>
         <button class="delete" data-id="${hotel.id_hotel}">Eliminar</button>
       `;

@@ -359,13 +359,13 @@ tr:nth-child(even) { background: #f6f9fe; }
 }
 
 .room-card button.update-room-btn {
-  background-color: #4caf50;
+  background: #3498db;
   color: #fff;
   margin-right: 8px;
 }
 
 .room-card button.update-room-btn:hover {
-  background-color: #45a049;
+  background: #2980b9;
 }
 
 .room-card button.delete-room-btn {
@@ -448,12 +448,12 @@ tr:nth-child(even) { background: #f6f9fe; }
 
 /* Botón editar */
 .actividad-card button.update-actividad-btn {
-  background-color: #4caf50;
+  background: #3498db;
   color: #fff;
 }
 
 .actividad-card button.update-actividad-btn:hover {
-  background-color: #45a049;
+  background: #2980b9;
 }
 
 /* Botón eliminar */

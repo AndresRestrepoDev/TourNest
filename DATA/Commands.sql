@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS TourNest;
 USE TourNest;
 
-DROP TABLE ceo;
+DROP TABLE IF EXISTS ceo;
 CREATE TABLE ceo (
     id_ceo INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(200) UNIQUE NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE ceo (
     role VARCHAR(50) NOT NULL
 );
 
-DROP TABLE users;
+DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     id_user INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE users (
     role VARCHAR(50) NOT NULL
 );
 
-DROP TABLE owners;
+DROP TABLE IF EXISTS owners;
 CREATE TABLE owners (
     id_owner INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE owners (
     role VARCHAR(50) NOT NULL
 );
 
-DROP TABLE hotels;
+DROP TABLE IF EXISTS hotels;
 CREATE TABLE hotels (
     id_hotel INT AUTO_INCREMENT PRIMARY KEY,
     id_owner INT NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE hotels (
     FOREIGN KEY (id_owner) REFERENCES owners(id_owner) ON DELETE CASCADE
 );
 	
-DROP TABLE rooms;
+DROP TABLE IF EXISTS rooms;
 CREATE TABLE rooms (
     id_room INT AUTO_INCREMENT PRIMARY KEY,
     id_hotel INT NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE rooms (
     FOREIGN KEY (id_hotel) REFERENCES hotels(id_hotel) ON DELETE CASCADE
 );
 
-DROP TABLE activitys;
+DROP TABLE IF EXISTS activitys;
 CREATE TABLE activitys (
     id_activity INT AUTO_INCREMENT PRIMARY KEY,
     id_owner INT NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE activitys (
     FOREIGN KEY (id_owner) REFERENCES owners(id_owner) ON DELETE CASCADE
 );
 
-DROP TABLE reserves;
+DROP TABLE IF EXISTS reserves;
 CREATE TABLE reserves (
     id_reserve INT AUTO_INCREMENT PRIMARY KEY,
     id_user INT NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE reserves (
     FOREIGN KEY (id_activity) REFERENCES activitys(id_activity) ON DELETE SET NULL
 );
 
-DROP TABLE reviews;
+DROP TABLE IF EXISTS reviews;
 CREATE TABLE reviews (
     id_reviews INT AUTO_INCREMENT PRIMARY KEY,
     id_user INT NOT NULL,
@@ -129,17 +129,17 @@ FROM reserves r
 INSERT INTO ceo (email, password, role) VALUES
 ('admin@tournest.com', 'admin123', 'ceo');
 
-INSERT INTO users (name, email, password, document, date_birth, phone, role) VALUES
-('Yancelly Rojo', 'rojo@example.com', 'pass123', 'CC1001', '1990-05-12', '3001234567', 'user'),
-('Jeronimo Cardenas', 'jero@example.com', 'pass123', 'CC1002', '1988-08-22', '3019876543', 'user'),
-('Andrés Restrepo', 'andres@example.com', 'pass123', 'CC1003', '1995-11-03', '3024567890', 'user'),
-('Stiven Hidalgo', 'stiven@example.com', 'pass123', 'CC1004', '1992-07-19', '3106547891', 'user');
+INSERT INTO users (id_user, name, email, password, document, date_birth, phone, role) VALUES
+(1, 'Yancelly Rojo', 'rojo@example.com', 'pass123', 'CC1001', '1990-05-12', '3001234567', 'user'),
+(2, 'Jeronimo Cardenas', 'jero@example.com', 'pass123', 'CC1002', '1988-08-22', '3019876543', 'user'),
+(3, 'Andrés Restrepo', 'andres@example.com', 'pass123', 'CC1003', '1995-11-03', '3024567890', 'user'),
+(4, 'Stiven Hidalgo', 'stiven@example.com', 'pass123', 'CC1004', '1992-07-19', '3106547891', 'user');
 
-INSERT INTO owners (name, email, password, nit, date_birth, phone, role) VALUES
-('Aviatur', 'aviatur@example.com', 'pass123', 'NIT900111', '1980-01-15', '3157896541', 'owner'),
-('Despegar SAS', 'despegar@example.com', 'pass123', 'NIT900222', '1982-09-09', '3169873210', 'owner'),
-('Decamerun', 'decamerun@example.com', 'pass123', 'NIT900333', '1980-09-09', '3000873210', 'owner'),
-('Colombia Tours', 'coloTours@example.com', 'pass123', 'NIT900444', '1981-08-09', '3161113210', 'owner');
+INSERT INTO owners (id_owner, name, email, password, nit, date_birth, phone, role) VALUES
+(5, 'Aviatur', 'aviatur@example.com', 'pass123', 'NIT900111', '1980-01-15', '3157896541', 'owner'),
+(6, 'Despegar SAS', 'despegar@example.com', 'pass123', 'NIT900222', '1982-09-09', '3169873210', 'owner'),
+(7, 'Decamerun', 'decamerun@example.com', 'pass123', 'NIT900333', '1980-09-09', '3000873210', 'owner'),
+(8, 'Colombia Tours', 'coloTours@example.com', 'pass123', 'NIT900444', '1981-08-09', '3161113210', 'owner');
 
 INSERT INTO hotels (id_owner, name, description, city, rating_average, img_url) VALUES
 (5, 'Hotel Cartagena Dubai', 'Hotel de 4 estrellas con habitaciones sencillas con vista al mar, restaurante, bar y piscina infinita.', 'Cartagena', 4.0, 'https://dubai.cartagena-hotels.net/data/Pics/OriginalPhoto/12838/1283872/1283872078/hotel-cartagena-dubai-cartagena-pic-65.JPEG'),
