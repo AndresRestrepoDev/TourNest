@@ -1,0 +1,315 @@
+/* --- Reset básico --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Tipografía global --- */
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f7f8fa;
+  color: #222;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  background: #2c3e50;
+  color: #fff;
+  padding: 2rem 1rem;
+  min-width: 220px;
+  height: 100vh;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra los elementos horizontalmente */
+}
+
+.sidebar h2 {
+  margin-bottom: 2rem;
+  font-size: 1.3rem;
+  text-align: center;
+  width: 100%;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.7rem 0;
+  background: #34495e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  text-align: center; /* Centra el texto de los botones */
+  transition: background 0.2s;
+}
+.sidebar button:hover {
+  background: #1abc9c;
+}
+.logout-btn {
+  background: #e74c3c !important;
+  margin-top: auto;
+}
+.logout-btn:hover {
+  background: #c0392b !important;
+}
+
+/* --- Cards --- */
+.card, .hotel-card, .room-card, .activity-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+  padding: 1rem;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 320px;
+  min-height: 280px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover, .hotel-card:hover, .room-card:hover, .activity-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+.card img, .hotel-card img, .room-card img, .activity-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: 1rem;
+}
+.card-buttons, .hotel-card .card-buttons, .room-card .card-buttons, .activity-card .card-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.card p,
+.hotel-card p,
+.room-card p,
+.activity-card p {
+  font-size: 1rem;
+  color: #222;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.card h3,
+.hotel-card h3,
+.room-card h3,
+.activity-card h3 {
+  font-size: 1.2rem;
+  color: #34acdb;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* --- Botones globales --- */
+.btn, .edit-btn, .delete-btn, .hotel-card button, .room-card button, .activity-card button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-weight: bold;
+  margin: 0 5px;
+  min-width: 100px;
+  width: 80%;
+}
+.edit-btn, .hotel-card button.edit, .room-card button.edit, .activity-card button.edit {
+  background: #3498db;
+  color: #fff;
+}
+.edit-btn:hover, .hotel-card button.edit:hover, .room-card button.edit:hover, .activity-card button.edit:hover {
+  background: #2980b9;
+}
+.delete-btn, .hotel-card button.delete, .room-card button.delete, .activity-card button.delete {
+  background: #e74c3c;
+  color: #fff;
+}
+.delete-btn:hover, .hotel-card button.delete:hover, .room-card button.delete:hover, .activity-card button.delete:hover {
+  background: #c0392b;
+}
+
+/* --- Formularios --- */
+form {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  width: 100%;
+}
+form input,
+form select,
+form button {
+  font-size: 1rem;
+  padding: 0.7rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+form input:focus,
+form select:focus {
+  outline: none;
+  border-color: #1abc9c;
+}
+form button {
+  background: #1abc9c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+form button:hover {
+  background: #16a085;
+}
+
+/* --- Contenedores principales --- */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  margin-left: 240px;
+  /* Fondo degradado suave */
+  background: linear-gradient(135deg, #f7f8fa 60%, #e0ecff 100%);
+}
+.center-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.center-container h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #3498db;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #3498db 40%, #1abc9c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* --- Listas de cards --- */
+.hotel-container,
+.room-container,
+#actividad-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.2rem;
+  margin-top: 1rem;
+  justify-items: center;
+}
+.actividad-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem;
+  margin-top: 2rem;
+  justify-items: center;
+}
+
+/* --- Responsividad --- */
+@media (max-width: 900px) {
+  .main-content {
+    padding: 1rem;
+    margin-left: 0;
+  }
+  .sidebar {
+    position: static;
+    min-width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: center;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 1rem 0.5rem;
+  }
+  .sidebar h2 {
+    margin-bottom: 0;
+    font-size: 1.1rem;
+  }
+  .sidebar button {
+    margin-bottom: 0;
+    margin-right: 8px;
+    width: auto;
+    min-width: 90px;
+    font-size: 0.95rem;
+  }
+  .dashboard-container {
+    flex-direction: column;
+  }
+  .hotel-container,
+  .room-container,
+  #actividad-list {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .card, .hotel-card, .room-card, .activity-card {
+    width: 100%;
+    min-width: 220px;
+    min-height: 320px;
+  }
+}
+
+/* --- Extra para móviles pequeños --- */
+@media (max-width: 600px) {
+  .main-content {
+    padding: 0.5rem;
+  }
+  form {
+    padding: 1rem;
+    max-width: 100%;
+  }
+  .center-container {
+    padding: 0 0.5rem;
+  }
+}
+
+
+.special-card {
+  background: linear-gradient(120deg, #e0ecff 60%, #f7f8fa 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(44,62,80,0.12);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  margin: 2rem auto;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reserves-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.special-card h3 {
+  font-size: 1.3rem;
+  color: #e67e22;
+  margin-bottom: 0.5rem;
+}
+
+.special-card p {
+  font-size: 1rem;
+  color: #222;
+  margin-bottom: 0;
+}

@@ -186,7 +186,7 @@ async function loadUserActivities() {
       card.classList.add("actividad-card");
       card.innerHTML = `
         <img src="${act.img_url || 'https://static.vecteezy.com/system/resources/previews/012/942/784/non_2x/broken-image-icon-isolated-on-a-white-background-no-image-symbol-for-web-and-mobile-apps-free-vector.jpg'}">
-        <h4>${act.name}</h4>
+        <h3>${act.name}</h3>
         <p>${act.description}</p>
         <p><strong>Precio:</strong> $${act.price}</p>
         <p><strong>Duración:</strong> ${act.duration || "No especificada"}</p>
