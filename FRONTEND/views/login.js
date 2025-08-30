@@ -1,3 +1,5 @@
+const BACKEND_URL = "hhttps://tournest-d2kq.onrender.com";
+
 document.addEventListener("DOMContentLoaded", () => {
   // --------------------
   // LOGIN
@@ -11,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const password = document.getElementById("password_login").value;
 
       try {
-        const res = await fetch("http://localhost:5000/login", {
+        const res = await fetch(`${BACKEND_URL}/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password })
@@ -78,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       try {
-        const res = await fetch("http://localhost:5000/users", {
+        const res = await fetch(`${BACKEND_URL}/users`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newUser)
