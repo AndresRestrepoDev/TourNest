@@ -1,3 +1,5 @@
+const BACKEND_URL = "https://tournest-d2kq.onrender.com"; // Use your Render backend URL
+
 document.addEventListener("DOMContentLoaded", () => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const role = localStorage.getItem("role");
@@ -51,7 +53,7 @@ const actividadList = document.getElementById("actividad-list");
 async function loadUserHotels() {
   userHotelList.innerHTML = "<p>Loading hotels...</p>";
   try {
-    const res = await fetch("http://localhost:5000/hotels");
+    const res = await fetch(`${BACKEND_URL}/hotels`);
     if (!res.ok) throw new Error("Error loading hotels");
     const hotels = await res.json();
 
@@ -106,7 +108,7 @@ window.addEventListener('click', (event) => {
 async function loadRooms(hotelId) {
   userRoomList.innerHTML = "<p>Loading rooms...</p>";
   try {
-    const res = await fetch(`http://localhost:5000/rooms/hotel/${hotelId}`);
+    const res = await fetch(`${BACKEND_URL}/rooms/hotel/${hotelId}`);
     if (!res.ok) throw new Error("Error loading rooms");
     const rooms = await res.json();
 
@@ -173,7 +175,7 @@ window.addEventListener('click', (event) => {
 async function loadUserActivities() {
   actividadList.innerHTML = "<p>Loading activities...</p>";
   try {
-    const res = await fetch("http://localhost:5000/activitys");
+    const res = await fetch(`${BACKEND_URL}/activitys`);
     if (!res.ok) throw new Error("Error loading activities");
     const activities = await res.json();
 
