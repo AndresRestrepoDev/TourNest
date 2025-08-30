@@ -1,4 +1,4 @@
-const BACKEND_URL = "hhttps://tournest-d2kq.onrender.com";
+const BACKEND_URL = "https://tournest-d2kq.onrender.com";
 
 document.addEventListener("DOMContentLoaded", () => {
   // --------------------
