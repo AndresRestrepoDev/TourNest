@@ -1,6 +1,8 @@
-const apiHotel = "http://localhost:5000/hotels";
-const apiHabitacion = "http://localhost:5000/rooms";
-const apiActividad = "http://localhost:5000/activitys";
+const BACKEND_URL = "https://tournest-d2kq.onrender.com"; // Use your Render backend URL
+
+const apiHotel = `${BACKEND_URL}/hotels`;
+const apiHabitacion = `${BACKEND_URL}/rooms`;
+const apiActividad = `${BACKEND_URL}/activitys`;
 
 // When the DOM is loaded, check login and load data
 document.addEventListener("DOMContentLoaded", () => {
@@ -40,7 +42,7 @@ async function loadHotels() {
   container.innerHTML = ""; // Clear before rendering
 
   try {
-    const response = await fetch(`http://localhost:5000/hotels/owner/${ownerId}`);
+    const response = await fetch(`${apiHotel}/owner/${ownerId}`);
     if (!response.ok) throw new Error("Server response error");
 
     hotels = await response.json();
@@ -100,7 +102,7 @@ container.addEventListener("click", (e) => {
     const confirmDelete = confirm("Are you sure you want to delete this hotel?");
     if (!confirmDelete) return;
 
-    fetch(`http://localhost:5000/hotels/${idHotel}`, { method: "DELETE" })
+    fetch(`${apiHotel}/${idHotel}`, { method: "DELETE" })
       .then(res => {
         if (!res.ok) throw new Error("Error deleting hotel");
         // Update array and render
@@ -504,4 +506,5 @@ sidebarButtons.forEach(btn => {
   });
 });
 
-// Show "mis-hoteles" section
+// Show hotels section by default
+showSection("hoteles-propios");

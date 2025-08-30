@@ -16,7 +16,7 @@ db_config = {
     'user': os.getenv("DB_USER"),
     'password': os.getenv("DB_PASSWORD"),
     'database': os.getenv("DB_NAME"),
-    'autocommit': True   # 🔑 Very important to avoid locks
+    'autocommit': True   # Very important to avoid locks
 }
 
 def get_db_connection():  # Function to get a database connection
@@ -510,4 +510,5 @@ def get_rooms_by_hotel(hotel_id):
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__': # Run the Flask application
-    app.run(debug=True) # Debug
+    port = int(os.getenv("PORT", 5000))   # Puerto dinámico (Render) o 5000 (local)
+    app.run(host='0.0.0.0', debug=False) # Debug

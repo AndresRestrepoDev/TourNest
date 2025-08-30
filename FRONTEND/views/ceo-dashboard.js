@@ -1,5 +1,9 @@
-// API endpoint for hotels
-const apiHotel = "http://localhost:5000/hotels";
+// API endpoints for Render backend
+const BACKEND_URL = "https://tournest-d2kq.onrender.com";
+const apiHotel = `${BACKEND_URL}/hotels`;
+const apiRoom = `${BACKEND_URL}/rooms`;
+const apiActivity = `${BACKEND_URL}/activitys`;
+const apiOwners = `${BACKEND_URL}/owners`;
 
 // When the DOM is loaded, check login and load data
 document.addEventListener("DOMContentLoaded", async () => {
@@ -15,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   console.log("Logged owner ID:", ownerId);
 
-  // Here you could use ownerId to fetch ONLY their hotels
+  // Load all data
   await loadHotels(ownerId);
   await loadRooms(ownerId);
   await loadActivities(ownerId);
@@ -30,7 +34,7 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 // Load owners for hotel select
 async function cargarOwnersHotels() {
   try {
-    const response = await fetch("http://localhost:5000/owners"); 
+    const response = await fetch(apiOwners); 
     const owners = await response.json();
 
     const select = document.getElementById("id_owner_hotel");
@@ -214,8 +218,6 @@ async function cargarHoteles() {
 
 document.addEventListener("DOMContentLoaded", cargarHoteles);
 
-const apiRoom = "http://localhost:5000/rooms";
-
 let rooms = []; // Global variable to store rooms
 
 // Function to load rooms
@@ -353,7 +355,7 @@ habitacionForm.addEventListener("submit", async (e) => {
 // Function to fill owner select for activities
 async function cargarOwners() {
   try {
-    const response = await fetch("http://localhost:5000/owners"); 
+    const response = await fetch(apiOwners); 
     const owners = await response.json();
 
     const select = document.getElementById("actividad_owner");
@@ -376,8 +378,6 @@ async function cargarOwners() {
 
 // Call when page or section loads
 document.addEventListener("DOMContentLoaded", cargarOwners, cargarHoteles, cargarOwnersHotels);
-
-const apiActivity = "http://localhost:5000/activitys";
 
 let activities = []; // Global variable to store activities
 
@@ -429,7 +429,7 @@ activityContainer.addEventListener("click", async (e) => {
           alert("Activity deleted ✅");
           await loadActivities(); // Reload list
         } else {
-          alert("Error deleting activity ❌");
+          alert("Error deleting activity");
         }
       } catch (err) {
         console.error("Error DELETE:", err);
