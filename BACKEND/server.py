@@ -48,6 +48,10 @@ def health():
             "db_connected": False
         }), 500
 
+      
+@app.route('/health') # Route to check API status
+def health():
+    return jsonify({"status": "ok"}), 200  # JSON response indicating API is wo
 
 ############## Route for login validation ##############
 @app.route("/login", methods=["POST"])
