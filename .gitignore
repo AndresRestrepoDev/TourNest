@@ -1,8 +1,8 @@
 # Entorno virtual
-venv/
+BACKEND/venv/
 
 # Archivos de configuración sensibles
-.env
+BACKEND/.env
 
 # Archivos temporales de Python
 __pycache__/
