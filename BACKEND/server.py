@@ -16,6 +16,7 @@ db_config = {
     'user': os.getenv("DB_USER"),
     'password': os.getenv("DB_PASSWORD"),
     'database': os.getenv("DB_NAME"),
+    'port': int(os.getenv("DB_PORT", 5000)),
     'autocommit': True   # Very important to avoid locks
 }
 
@@ -27,9 +28,30 @@ def get_db_connection():  # Function to get a database connection
         print(f"Database connection error: {err}")
         return None # Returns None if there is a connection error
 
+@app.route('/health')
+def health():
+    conn = get_db_connection()
+    if conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT NOW();")
+        result = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        return jsonify({
+            "status": "ok",
+            "db_connected": True,
+            "db_time": str(result[0])
+        }), 200
+    else:
+        return jsonify({
+            "status": "fail",
+            "db_connected": False
+        }), 500
+
+      
 @app.route('/health') # Route to check API status
 def health():
-    return jsonify({"status": "ok"}), 200  # JSON response indicating API is working
+    return jsonify({"status": "ok"}), 200  # JSON response indicating API is wo
 
 ############## Route for login validation ##############
 @app.route("/login", methods=["POST"])
