@@ -163,3 +163,6 @@ Geronimo Cardona – Backend Developer
 Yancelly Rojas – Frontend Developer
 
 ✅ With this setup, you can run TourNest locally, connect to the database, and log in using the provided test credentials.
+
+link nelify: https://tournests.netlify.app/
+link render: https://tournest-d2kq.onrender.com

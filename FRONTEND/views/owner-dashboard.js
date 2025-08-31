@@ -507,4 +507,4 @@ sidebarButtons.forEach(btn => {
 });
 
 // Show hotels section by default
-showSection("hoteles-propios");
+showSection("mis-hoteles");
